@@ -9,7 +9,7 @@ class CompletedTasksPageAppbar extends StatelessWidget
 
   @override
   final Size preferredSize;
-  
+
   @override
   Widget build(BuildContext context) {
     return AppBar(

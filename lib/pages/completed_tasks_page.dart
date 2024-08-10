@@ -83,7 +83,7 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                                   Provider.of<PendingTasksDbServices>(context,
                                           listen: false)
                                       .addTask(newTask: eachTask);
-                    
+
                                   completedTasksProvider
                                       .deleteSpecificTask(index);
                                 },

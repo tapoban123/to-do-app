@@ -80,7 +80,7 @@ class PendingTasksDbServices with ChangeNotifier {
 
   void deleteDatabase() async {
     await initDatabase();
-    
+
     LocalNotificationsService().cancelAllNotification();
     box.deleteFromDisk();
     _hiveTasks.clear();

@@ -7,7 +7,7 @@ class NavigateTo extends HomePageDrawerEvent {
   final NavItem destination;
 
   NavigateTo({required this.destination});
-  
+
   @override
   List<Object?> get props => [destination];
 }

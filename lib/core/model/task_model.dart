@@ -8,7 +8,7 @@ class TaskModel {
   final bool remindMe;
   final String creationDate;
   final String creationTime;
-  
+
   TaskModel({
     required this.taskTitle,
     required this.taskDescription,

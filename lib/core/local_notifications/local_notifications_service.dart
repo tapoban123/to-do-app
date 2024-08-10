@@ -13,7 +13,7 @@ class LocalNotificationsService {
   Future<void> initialiseLocalNotifications() async {
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings("sticky_note");
+        AndroidInitializationSettings("pending_task_icon_white");
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
@@ -54,7 +54,7 @@ class LocalNotificationsService {
       visibility: NotificationVisibility.public,
       indeterminate: true,
       sound: RawResourceAndroidNotificationSound('test_notification_sound'),
-      icon: "sticky_note",
+      icon: "pending_task_icon_white",
       largeIcon: DrawableResourceAndroidBitmap("sticky_note"),
     );
   }

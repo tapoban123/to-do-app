@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class ThemeProvider extends ChangeNotifier {
-
-  void getTheme(){
-    
-  }
+  void getTheme() {}
 
   void changeTheme() {}
 }
