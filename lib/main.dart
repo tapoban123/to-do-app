@@ -9,7 +9,7 @@ import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/create_task_page.dart';
-import 'package:simple_todo_app/pages/home_page.dart';
+import 'package:simple_todo_app/pages/drawer_navigation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,22 +48,11 @@ class SimpleTodoApp extends StatelessWidget {
         title: "Simple Todo App",
         initialRoute: "/",
         routes: {
-          "/": (context) => HomePage(),
+          "/": (context) => DrawerNavigation(),
           "/createTasksPage": (context) => CreateTaskPage(),
           "/completedTasksPage": (context) => CompletedTasksPage(),
           "/aboutPage": (context) => AboutPage(),
         },
-        // builder: (context, child) {
-        //   print("From MaterialApp: ${child?.key}");
-        //   return Scaffold(
-        //     drawer: HomePageDrawer(
-        //       navigator:
-        //           (child?.key as GlobalKey<NavigatorState>?)?.currentState,
-        //     ),
-        //     body: child,
-        //   );
-        // },
-        // home: HomePage(),
       ),
     );
   }

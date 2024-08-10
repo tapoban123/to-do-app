@@ -16,50 +16,29 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // leading: IconButton(
-        //   onPressed: () {
-        //     RootScaffold.openDrawer(context);
-        //   },
-        //   icon: Icon(Icons.menu_rounded),
-        // ),
-        title: Text("Completed Tasks"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Provider.of<CompletedTasksDbServices>(context, listen: false)
-                  .deleteAllCompletedTasks();
-            },
-            icon: Icon(
-              Icons.delete_sweep_rounded,
-              color: Colors.red,
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(child: Consumer<CompletedTasksDbServices>(
-            builder: (context, completedTasksProvider, child) {
-              if (completedTasksProvider.allCompletedTasks.isEmpty) {
-                if (firstRun) {
-                  completedTasksProvider.getAllCompletedTasks();
-                  firstRun = false;
-                }
-                return const NoTasksScreen();
+    return Column(
+      children: [
+        Expanded(child: Consumer<CompletedTasksDbServices>(
+          builder: (context, completedTasksProvider, child) {
+            if (completedTasksProvider.allCompletedTasks.isEmpty) {
+              if (firstRun) {
+                completedTasksProvider.getAllCompletedTasks();
+                firstRun = false;
               }
+              return const NoTasksScreen();
+            }
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: ListView.builder(
-                  itemCount: completedTasksProvider.allCompletedTasks.length,
-                  itemBuilder: (context, index) {
-                    final eachTask =
-                        completedTasksProvider.allCompletedTasks[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: ListView.builder(
+                itemCount: completedTasksProvider.allCompletedTasks.length,
+                itemBuilder: (context, index) {
+                  final eachTask =
+                      completedTasksProvider.allCompletedTasks[index];
 
-                    return ListTile(
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: ListTile(
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 10,
                       ).copyWith(top: 10),
@@ -99,11 +78,12 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               IconButton(
+                                tooltip: "Re-assign task",
                                 onPressed: () {
                                   Provider.of<PendingTasksDbServices>(context,
                                           listen: false)
                                       .addTask(newTask: eachTask);
-
+                    
                                   completedTasksProvider
                                       .deleteSpecificTask(index);
                                 },
@@ -114,6 +94,7 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                                 ),
                               ),
                               IconButton(
+                                tooltip: "Delete permanently",
                                 onPressed: () {
                                   completedTasksProvider
                                       .deleteSpecificTask(index);
@@ -128,14 +109,14 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
-              );
-            },
-          ))
-        ],
-      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ))
+      ],
     );
   }
 }

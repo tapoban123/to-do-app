@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:simple_todo_app/core/navigation_service/navigation_service.dart';
-import 'package:simple_todo_app/pages/home_page.dart';
+import 'package:simple_todo_app/pages/drawer_navigation.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -34,7 +34,7 @@ class LocalNotificationsService {
     }
     await Navigator.push(
       NavigationService.navigatorKey.currentState!.context,
-      MaterialPageRoute<void>(builder: (context) => const HomePage()),
+      MaterialPageRoute<void>(builder: (context) => DrawerNavigation()),
     );
   }
 

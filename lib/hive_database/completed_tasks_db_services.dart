@@ -35,7 +35,7 @@ class CompletedTasksDbServices extends ChangeNotifier {
 
   void addTask(TaskModel completedTask) async {
     await initHive();
-    _allTasks.add(completedTask);
+    _allTasks.insert(0, completedTask);
 
     _completedHiveTasks.clear();
     _addAllTasksToHiveList();
