@@ -3,15 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesLocalStorage {
   late SharedPreferences _sharedPreferences;
 
-  void initDB() async {
+  Future<void> initDB() async {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  void setTheme(String currentTheme) {
+  void setTheme(String currentTheme) async {
+    await initDB();
     _sharedPreferences.setString("currentTheme", currentTheme);
   }
 
-  String? getCurrentTheme() {
+  Future<String?> getCurrentTheme() async {
+    await initDB();
     return _sharedPreferences.getString("currentTheme");
   }
 }

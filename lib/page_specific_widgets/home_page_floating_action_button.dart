@@ -9,13 +9,28 @@ class HomePageFloatingActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       clipBehavior: Clip.none,
+      backgroundColor: Colors.blueAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const CreateTaskPage(),
         ));
       },
-      child: const Icon(CupertinoIcons.add),
+      child: Text(
+        String.fromCharCode(CupertinoIcons.add.codePoint),
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          fontFamily: CupertinoIcons.add.fontFamily,
+          package: CupertinoIcons.add.fontPackage,
+          fontSize: 26,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }
+
+// const Icon(
+//         CupertinoIcons.add,
+//         color: Colors.white,
+//       ),

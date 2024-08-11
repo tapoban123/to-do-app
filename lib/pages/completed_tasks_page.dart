@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_todo_app/core/common/show_snackbar.dart';
+import 'package:simple_todo_app/core/providers/navigation_provider.dart';
 import 'package:simple_todo_app/hive_database/completed_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/pages/no_tasks_screen.dart';
@@ -25,7 +27,14 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                 completedTasksProvider.getAllCompletedTasks();
                 firstRun = false;
               }
-              return const NoTasksScreen();
+              return NoTasksScreen(
+                buttonColor: Colors.cyan,
+                buttonText: "Complete a task now",
+                onButtonTap: () =>
+                    Provider.of<NavigationProvider>(context, listen: false)
+                        .navigateToPage(0),
+                pageContentText: "You have not completed any tasks yet.",
+              );
             }
 
             return Padding(
@@ -86,6 +95,11 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
 
                                   completedTasksProvider
                                       .deleteSpecificTask(index);
+                                  showSnackBar(
+                                    context,
+                                    "Re-assigned task successfully.",
+                                    Colors.blueAccent,
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.restore_rounded,
@@ -98,6 +112,11 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                                 onPressed: () {
                                   completedTasksProvider
                                       .deleteSpecificTask(index);
+                                  showSnackBar(
+                                    context,
+                                    "Deleted task successfully.",
+                                    Colors.red[400]!,
+                                  );
                                 },
                                 icon: Icon(
                                   Icons.delete_forever_rounded,

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_todo_app/core/common/show_dialog.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
-import 'package:simple_todo_app/core/local_notifications/local_notifications_service.dart';
+import 'package:simple_todo_app/core/common/show_snackbar.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 
 class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,8 +20,9 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton(
           onPressed: () {
-            LocalNotificationsService()
-                .showInstantNotificationAndroid("Testing ", "Hello World");
+            showSnackBar(context, "Task Created", Colors.purple[300]!);
+            // LocalNotificationsService()
+            //     .showInstantNotificationAndroid("Testing ", "Hello World");
             // showErrorDialog(
             //   context,
             //   icon: Icons.close,
@@ -32,8 +35,30 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
         ),
         TextButton(
           onPressed: () {
-            Provider.of<PendingTasksDbServices>(context, listen: false)
-                .deleteDatabase();
+            int pendingTasksLength =
+                Provider.of<PendingTasksDbServices>(context, listen: false)
+                    .getCurrentTaskIndex;
+            if (pendingTasksLength != 0) {
+              showConfirmationDialog(
+                context: context,
+                icon: Icons.question_mark,
+                titleText: "Are you sure?",
+                contentText:
+                    "You are about to delete all your pending tasks. Are you sure you want to continue?",
+                onConfirm: () {
+                  Provider.of<PendingTasksDbServices>(context, listen: false)
+                      .deleteDatabase();
+                  Navigator.of(context).pop();
+                },
+              );
+            } else {
+              showErrorDialog(context,
+                  titleText: "No Pending Tasks",
+                  contentText:
+                      "You currently do not have any pending tasks to delete.",
+                  icon: CupertinoIcons.exclamationmark,
+                  actionButtonText: "Add new task");
+            }
           },
           child: const Icon(
             Icons.delete_sweep,

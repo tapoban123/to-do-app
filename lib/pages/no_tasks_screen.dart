@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:simple_todo_app/pages/create_task_page.dart';
 
 class NoTasksScreen extends StatelessWidget {
-  const NoTasksScreen({super.key});
+  final VoidCallback onButtonTap;
+  final String buttonText;
+  final Color buttonColor;
+  final String pageContentText;
+
+  const NoTasksScreen({
+    super.key,
+    required this.buttonText,
+    required this.buttonColor,
+    required this.onButtonTap,
+    required this.pageContentText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +22,35 @@ class NoTasksScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("No tasks present"),
+          SizedBox(
+            width: 300,
+            child: Text(
+              pageContentText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CreateTaskPage(),
-              ));
-            },
-            child: const Text("Create a task now"),
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(200, 50),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              backgroundColor: buttonColor,
+            ),
+            onPressed: onButtonTap,
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+              ),
+            ),
           )
         ],
       ),

@@ -25,6 +25,7 @@ class _CreateTaskLeadingIconsState extends State<CreateTaskLeadingIcons> {
       leading: widget.leadingIcon,
       title: Text(widget.titleText),
       trailing: Checkbox(
+        activeColor: Colors.white.withOpacity(0.8),
         onChanged: widget.onChanged,
         value: widget.isChecked,
       ),

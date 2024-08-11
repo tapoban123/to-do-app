@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
+import 'package:simple_todo_app/core/common/show_snackbar.dart';
 import 'package:simple_todo_app/core/local_notifications/local_notifications_service.dart';
 import 'package:simple_todo_app/core/model/task_model.dart';
+import 'package:simple_todo_app/core/providers/schedule_date_time_provider.dart';
 import 'package:simple_todo_app/core/widgets/create_task_leading_icons.dart';
 import 'package:simple_todo_app/core/widgets/create_task_textfield.dart';
 import 'package:simple_todo_app/core/widgets/important_task_icon.dart';
@@ -34,16 +36,15 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   final TextEditingController newTaskDescriptionController =
       TextEditingController();
 
+  late String currentDate;
+  late String currentTime;
+
   bool remindMe = false;
   bool isImportant = false;
   bool firstRun = true;
 
   DateTime remindMeDate = DateTime.now();
   TimeOfDay remindMeTime = TimeOfDay.now();
-
-  String currentDate =
-      DateFormat("dd/MM/yyyy").format(DateTime.now()).replaceAll("/", "-");
-  String currentTime = DateFormat.jm().format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -205,22 +206,29 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                   height: 25,
                 ),
                 remindMe
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ReminderOption(
-                            onTap: pickDate,
-                            textController:
-                                TextEditingController(text: currentDate),
-                            tileLabel: "Date",
-                          ),
-                          ReminderOption(
-                            onTap: pickTime,
-                            textController:
-                                TextEditingController(text: currentTime),
-                            tileLabel: "Time",
-                          ),
-                        ],
+                    ? Consumer<ScheduleDateTimeProvider>(
+                        builder: (context, dateTimeProvider, child) {
+                          currentDate = dateTimeProvider.getScheduledDate;
+                          currentTime = dateTimeProvider.getScheduledTime;
+
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ReminderOption(
+                                onTap: pickDate,
+                                textController:
+                                    TextEditingController(text: currentDate),
+                                tileLabel: "Date",
+                              ),
+                              ReminderOption(
+                                onTap: pickTime,
+                                textController:
+                                    TextEditingController(text: currentTime),
+                                tileLabel: "Time",
+                              ),
+                            ],
+                          );
+                        },
                       )
                     : const SizedBox(
                         height: 56,
@@ -263,17 +271,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       barrierDismissible: false,
     ).then(
       (newSelectedDate) {
-        setState(() {
-          print(newSelectedDate);
+        if (newSelectedDate != null) {
+          Provider.of<ScheduleDateTimeProvider>(context, listen: false)
+              .changeDate(newSelectedDate);
 
-          if (newSelectedDate != null) {
-            remindMeDate = newSelectedDate;
-
-            currentDate = DateFormat("dd/MM/yyyy")
-                .format(newSelectedDate)
-                .replaceAll("/", "-");
-          }
-        });
+          remindMeDate = newSelectedDate;
+        }
       },
     );
   }
@@ -284,20 +287,21 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
       initialTime: TimeOfDay.now(),
     ).then(
       (newSelectedTime) {
-        setState(() {
+        if (newSelectedTime != null) {
+          remindMeTime = newSelectedTime;
           final now = DateTime.now();
-          currentTime = DateFormat.jm().format(
-            DateTime(
-              now.year,
-              now.month,
-              now.day,
-              newSelectedTime!.hour,
-              newSelectedTime.minute,
-            ),
+
+          DateTime selectedTime = DateTime(
+            now.year,
+            now.month,
+            now.day,
+            newSelectedTime.hour,
+            newSelectedTime.minute,
           );
 
-          remindMeTime = newSelectedTime;
-        });
+          Provider.of<ScheduleDateTimeProvider>(context, listen: false)
+              .changeTime(selectedTime);
+        }
       },
     );
   }
@@ -315,6 +319,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   void deleteTask() {
     Provider.of<PendingTasksDbServices>(context, listen: false)
         .deleteSpecificTask(widget.taskIndex!);
+    showSnackBar(
+      context,
+      "Deleted task successfully",
+      Colors.purple[300]!,
+    );
 
     Navigator.of(context).pop();
   }
@@ -354,9 +363,20 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             newTask,
             widget.taskIndex!,
           );
+
+          showSnackBar(
+            context,
+            "Updated task successfully",
+            Colors.purple[300]!,
+          );
         } else {
           Provider.of<PendingTasksDbServices>(context, listen: false).addTask(
             newTask: newTask,
+          );
+          showSnackBar(
+            context,
+            "Created task successfully",
+            Colors.purple[300]!,
           );
         }
 
@@ -373,6 +393,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         showSnackBar(
           context,
           e.toString(),
+          Colors.red[400]!,
         );
       }
     } else {

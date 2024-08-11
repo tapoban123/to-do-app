@@ -36,7 +36,7 @@ class _CreateTaskTextfieldState extends State<CreateTaskTextfield> {
       ),
       style: TextStyle(fontSize: widget.fontSize ?? widget.fontSize),
       textInputAction: widget.textInputAction,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.multiline,
       cursorColor: Colors.white,
       maxLines: widget.maxLines,
     );

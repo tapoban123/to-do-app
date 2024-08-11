@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_todo_app/core/common/show_snackbar.dart';
 
 import 'package:simple_todo_app/core/widgets/important_task_icon.dart';
 import 'package:simple_todo_app/core/widgets/scheduled_task_icon.dart';
@@ -39,7 +40,16 @@ class _HomePageState extends State<HomePage> {
                 firstRun = false;
               }
 
-              return const NoTasksScreen();
+              return NoTasksScreen(
+                buttonColor: Colors.purple[700]!,
+                buttonText: "Create a task now",
+                onButtonTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CreateTaskPage(),
+                  ));
+                },
+                pageContentText: "You do not have any pending tasks right now.",
+              );
             }
             return Column(
               children: [
@@ -101,6 +111,8 @@ class _HomePageState extends State<HomePage> {
                                     )
                                   : SizedBox.shrink(),
                               Checkbox(
+                                checkColor: Colors.black,
+                                activeColor: Colors.white.withOpacity(0.8),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
@@ -109,6 +121,11 @@ class _HomePageState extends State<HomePage> {
                                     checkBoxValues[index] =
                                         !checkBoxValues[index];
                                   });
+                                  showSnackBar(
+                                    context,
+                                    "Yay! You just completed a task.",
+                                    Colors.deepPurpleAccent,
+                                  );
 
                                   await Future.delayed(
                                     Duration(milliseconds: 300),
@@ -118,7 +135,9 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     listen: false,
                                   ).addTask(eachTask);
+
                                   checkBoxValues.removeAt(index);
+
                                   tasksProvider.deleteSpecificTask(index);
                                 },
                                 value: checkBoxValues[index],

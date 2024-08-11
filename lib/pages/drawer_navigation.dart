@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_todo_app/core/providers/navigation_provider.dart';
 import 'package:simple_todo_app/page_specific_widgets/about_page_appbar.dart';
 import 'package:simple_todo_app/page_specific_widgets/completed_tasks_page_appbar.dart';
 import 'package:simple_todo_app/page_specific_widgets/home_page_appbar.dart';
@@ -8,6 +10,7 @@ import 'package:simple_todo_app/page_specific_widgets/home_page_floating_action_
 import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/home_page.dart';
+import 'package:simple_todo_app/pages/settings_page.dart';
 
 class DrawerNavigation extends StatefulWidget {
   DrawerNavigation({super.key});
@@ -19,6 +22,7 @@ class DrawerNavigation extends StatefulWidget {
 class _DrawerNavigationState extends State<DrawerNavigation> {
   ScrollController scrollController = ScrollController();
   bool isFabBVisible = true;
+  late int currentIndex;
 
   List<Map<String, dynamic>> navItems = [
     {
@@ -34,7 +38,6 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
       "name": "About Page",
     },
   ];
-  int currentIndex = 0;
 
   List<Widget> getPages() {
     List<Widget> pages = [
@@ -89,6 +92,8 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    currentIndex = Provider.of<NavigationProvider>(context).currentPageNumber;
+
     return Scaffold(
       appBar: returnPageSpecificAppBars(),
       floatingActionButton: (isFabBVisible && currentIndex == 0)
@@ -116,9 +121,8 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
                     leading: Icon(eachItem["icon"]),
                     title: Text(eachItem["name"]),
                     onTap: () {
-                      setState(() {
-                        currentIndex = index;
-                      });
+                      Provider.of<NavigationProvider>(context, listen: false)
+                          .navigateToPage(index);
                       Scaffold.of(context).closeDrawer();
                     },
                   );
@@ -128,6 +132,11 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
             Expanded(
               flex: 1,
               child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                  ));
+                },
                 leading: Icon(Icons.settings),
                 title: Text("Settings"),
               ),

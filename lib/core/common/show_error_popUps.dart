@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 
-void showSnackBar(
-  BuildContext context,
-  String message,
-) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-    ),
-  );
-}
-
 void showErrorDialog(
   BuildContext context, {
   required String titleText,
   required String contentText,
   required IconData icon,
+  String actionButtonText = "Try again",
 }) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       icon: CircleAvatar(
         backgroundColor: Colors.redAccent[700],
         radius: 40,
@@ -67,7 +58,7 @@ void showErrorDialog(
                 Navigator.of(context).pop();
               },
               child: Text(
-                "Try again",
+                actionButtonText,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.white,
