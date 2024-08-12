@@ -27,10 +27,13 @@ void main() async {
     },
   );
   await LocalNotificationsService().initialiseLocalNotifications();
+  final _isDark = await SharedPreferencesLocalStorage().getCurrentTheme();
 
   runApp(
     ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+      create: (context) => ThemeProvider(
+        isDark: _isDark ?? true,
+      ),
       builder: (context, child) => const SimpleTodoApp(),
     ),
   );
@@ -44,12 +47,10 @@ class SimpleTodoApp extends StatefulWidget {
 }
 
 class _SimpleTodoAppState extends State<SimpleTodoApp> {
-  late String currentTheme;
+  late ThemeData currentTheme;
 
   @override
   Widget build(BuildContext context) {
-    currentTheme = "dark";
-    
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -64,24 +65,21 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
         ChangeNotifierProvider(
           create: (context) => ScheduleDateTimeProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-        ),
       ],
-      child: MaterialApp(
-        navigatorKey: NavigationService.navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: currentTheme == "dark"
-            ? ThemeData.dark(useMaterial3: true)
-            : ThemeData.light(useMaterial3: true),
-        title: "Simple Todo App",
-        initialRoute: "/",
-        routes: {
-          "/": (context) => DrawerNavigation(),
-          "/createTasksPage": (context) => CreateTaskPage(),
-          "/completedTasksPage": (context) => CompletedTasksPage(),
-          "/aboutPage": (context) => AboutPage(),
-        },
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) => MaterialApp(
+          navigatorKey: NavigationService.navigatorKey,
+          debugShowCheckedModeBanner: false,
+          theme: themeProvider.getCurrentTheme,
+          title: "Simple Todo App",
+          initialRoute: "/",
+          routes: {
+            "/": (context) => DrawerNavigation(),
+            "/createTasksPage": (context) => CreateTaskPage(),
+            "/completedTasksPage": (context) => CompletedTasksPage(),
+            "/aboutPage": (context) => AboutPage(),
+          },
+        ),
       ),
     );
   }

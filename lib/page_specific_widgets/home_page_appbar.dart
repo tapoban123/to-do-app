@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_dialog.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
-import 'package:simple_todo_app/core/common/show_snackbar.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 
 class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,21 +17,12 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: const Text("My Tasks"),
       centerTitle: true,
       actions: [
-        TextButton(
-          onPressed: () {
-            showSnackBar(context, "Task Created", Colors.purple[300]!);
-            // LocalNotificationsService()
-            //     .showInstantNotificationAndroid("Testing ", "Hello World");
-            // showErrorDialog(
-            //   context,
-            //   icon: Icons.close,
-            //   titleText: "Oops!!!",
-            //   contentText:
-            //       "Failed to create a new task. Please select the date/time in the future.",
-            // );
-          },
-          child: Icon(Icons.notifications),
-        ),
+        // TextButton(
+        //   onPressed: () {
+        //     showSnackBar(context, "Task Created", Colors.purple[300]!);
+        //   },
+        //   child: Icon(Icons.notifications),
+        // ),
         TextButton(
           onPressed: () {
             int pendingTasksLength =

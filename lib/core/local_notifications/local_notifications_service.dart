@@ -11,7 +11,6 @@ class LocalNotificationsService {
       FlutterLocalNotificationsPlugin();
 
   Future<void> initialiseLocalNotifications() async {
-// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("pending_task_icon_white");
 
@@ -84,7 +83,6 @@ class LocalNotificationsService {
     required String description,
     required DateTime scheduledDateTime,
   }) async {
-    // https://stackoverflow.com/questions/71031037/how-to-schedule-multiple-time-specific-local-notifications-in-flutter
     int notificationId = notificationID;
 
     final timeZone = await FlutterTimezone.getLocalTimezone();
@@ -112,8 +110,18 @@ class LocalNotificationsService {
     }
   }
 
+  void cancelActiveNotifications() async {
+    final activeNotifications =
+        await flutterLocalNotificationsPlugin.getActiveNotifications();
+
+    if (activeNotifications.isNotEmpty) {
+      for (final notifications in activeNotifications) {
+        cancelSpecificNotification(notifications.id!);
+      }
+    }
+  }
+
   void cancelSpecificNotification(int notificationID) async {
-    // flutterLocalNotificationsPlugin.getActiveNotifications()
     await flutterLocalNotificationsPlugin.cancel(notificationID);
   }
 

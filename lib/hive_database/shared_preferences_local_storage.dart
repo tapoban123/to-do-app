@@ -7,13 +7,13 @@ class SharedPreferencesLocalStorage {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  void setTheme(String currentTheme) async {
+  void setTheme(bool currentTheme) async {
     await initDB();
-    _sharedPreferences.setString("currentTheme", currentTheme);
+    _sharedPreferences.setBool("isDark", currentTheme);
   }
 
-  Future<String?> getCurrentTheme() async {
+  Future<bool?> getCurrentTheme() async {
     await initDB();
-    return _sharedPreferences.getString("currentTheme");
+    return _sharedPreferences.getBool("isDark");
   }
 }

@@ -12,9 +12,29 @@ class HomePageFloatingActionButton extends StatelessWidget {
       backgroundColor: Colors.blueAccent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const CreateTaskPage(),
-        ));
+        Navigator.of(context).push(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const CreateTaskPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              final tween = Tween(
+                begin: Offset(1, 0),
+                end: Offset.zero,
+              ).chain(
+                CurveTween(curve: Curves.fastEaseInToSlowEaseOut),
+              );
+
+              final offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+            transitionDuration: Duration(milliseconds: 500),
+          ),
+        );
       },
       child: Text(
         String.fromCharCode(CupertinoIcons.add.codePoint),
@@ -29,8 +49,3 @@ class HomePageFloatingActionButton extends StatelessWidget {
     );
   }
 }
-
-// const Icon(
-//         CupertinoIcons.add,
-//         color: Colors.white,
-//       ),

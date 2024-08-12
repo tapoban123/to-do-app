@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_snackbar.dart';
+import 'package:simple_todo_app/core/local_notifications/local_notifications_service.dart';
 
 import 'package:simple_todo_app/core/widgets/important_task_icon.dart';
 import 'package:simple_todo_app/core/widgets/scheduled_task_icon.dart';
@@ -28,15 +29,21 @@ class _HomePageState extends State<HomePage> {
   List<bool> checkBoxValues = [];
 
   @override
+  void initState() {
+    LocalNotificationsService().cancelActiveNotifications();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Consumer<PendingTasksDbServices>(
-          builder: (context, tasksProvider, child) {
-            if (tasksProvider.getAllTasks.isEmpty) {
+          builder: (context, pendingTasksProvider, child) {
+            if (pendingTasksProvider.getAllTasks.isEmpty) {
               if (firstRun) {
-                tasksProvider.storePreviousData();
+                pendingTasksProvider.storePreviousData();
                 firstRun = false;
               }
 
@@ -54,19 +61,27 @@ class _HomePageState extends State<HomePage> {
             return Column(
               children: [
                 Expanded(
-                  child: ListView.builder(
-                    controller: widget.scrollDirection,
+                  child: ReorderableListView.builder(
+                    scrollController: widget.scrollDirection,
                     scrollDirection: Axis.vertical,
-                    itemCount: tasksProvider.getAllTasks.length,
+                    itemCount: pendingTasksProvider.getAllTasks.length,
+                    onReorder: (int oldIndex, int newIndex) {
+                      pendingTasksProvider.reOrderTasks(
+                        oldIndex: oldIndex,
+                        newIndex: newIndex,
+                      );
+                    },
                     itemBuilder: (context, index) {
-                      final eachTask = tasksProvider.getAllTasks[index];
+                      final eachTask = pendingTasksProvider.getAllTasks[index];
                       checkBoxValues.add(false);
 
                       return Padding(
+                        key: ValueKey(index),
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: ListTile(
                           splashColor: Colors.transparent,
-                          leading: Icon(Icons.pending_actions_sharp),
+                          // leading: Icon(Icons.pending_actions_sharp),
+                          leading: Icon(Icons.drag_handle_rounded),
                           title: Text(eachTask.taskTitle),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
@@ -80,13 +95,37 @@ class _HomePageState extends State<HomePage> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CreateTaskPage(
-                                oldTask: eachTask,
-                                editSpecificTask: true,
-                                taskIndex: index,
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        CreateTaskPage(
+                                  oldTask: eachTask,
+                                  editSpecificTask: true,
+                                  taskIndex: index,
+                                ),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  final tween = Tween(
+                                    begin: Offset(0, 1),
+                                    end: Offset.zero,
+                                  ).chain(
+                                    CurveTween(
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                    ),
+                                  );
+
+                                  final animationOffset =
+                                      animation.drive(tween);
+
+                                  return SlideTransition(
+                                    position: animationOffset,
+                                    child: child,
+                                  );
+                                },
+                                transitionDuration: Duration(milliseconds: 500),
                               ),
-                            ));
+                            );
                           },
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -138,7 +177,8 @@ class _HomePageState extends State<HomePage> {
 
                                   checkBoxValues.removeAt(index);
 
-                                  tasksProvider.deleteSpecificTask(index);
+                                  pendingTasksProvider
+                                      .deleteSpecificTask(index);
                                 },
                                 value: checkBoxValues[index],
                               ),

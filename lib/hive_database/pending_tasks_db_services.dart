@@ -67,6 +67,26 @@ class PendingTasksDbServices with ChangeNotifier {
     notifyListeners();
   }
 
+  void reOrderTasks({
+    required int oldIndex,
+    required int newIndex,
+  }) async {
+    await initDatabase();
+
+    if (oldIndex > newIndex) {
+      _allTasks.insert(newIndex, _allTasks[oldIndex]);
+      _allTasks.removeAt(oldIndex + 1);
+    } else {
+      _allTasks.insert(newIndex, _allTasks[oldIndex]);
+      _allTasks.removeAt(oldIndex);
+    }
+
+    _addTasksToHiveList();
+    box.put(PENDING_TASK_HIVE_BOX_NAME, _hiveTasks);
+
+    notifyListeners();
+  }
+
   void deleteSpecificTask(int taskIndex) async {
     await initDatabase();
 

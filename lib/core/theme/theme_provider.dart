@@ -1,32 +1,37 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:simple_todo_app/hive_database/shared_preferences_local_storage.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  String _currentTheme = "dark";
+  late ThemeData _currentTheme;
+  late bool _isDark;
 
-  // String get getCurrentTheme => _currentTheme;
-
-  Future<String> getTheme() async {
-    String? _theme = await SharedPreferencesLocalStorage().getCurrentTheme();
-    print(_theme);
-
-    if (_theme != null) {
-      _currentTheme = _theme;
-    } else {
-      _currentTheme = "dark";
-    }
-
-    return _currentTheme;
+  ThemeProvider({
+    required bool isDark,
+  }) {
+    _isDark = isDark;
+    this._currentTheme = _isDark ? ThemeData.dark() : ThemeData.light();
   }
 
-  void changeTheme() {
-    if (_currentTheme == "dark") {
-      _currentTheme = "light";
-    } else if (_currentTheme == "light") {
-      _currentTheme = "dark";
+  ThemeData get getCurrentTheme => _currentTheme;
+
+  bool isDarkTheme() {
+    if (_currentTheme == ThemeData.dark()) {
+      return true;
+    } else {
+      return false;
     }
-    print(_currentTheme);
-    SharedPreferencesLocalStorage().setTheme(_currentTheme);
+  }
+
+  void changeTheme({required bool toDarkTheme}) {
+    if (toDarkTheme) {
+      _currentTheme = ThemeData.dark();
+      _isDark = true;
+    } else {
+      _currentTheme = ThemeData.light();
+      _isDark = false;
+    }
+
+    SharedPreferencesLocalStorage().setTheme(_isDark);
     notifyListeners();
   }
 }

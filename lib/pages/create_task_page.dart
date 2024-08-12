@@ -74,6 +74,13 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: widget.editSpecificTask
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.close_rounded))
+              : null,
           title: Text(widget.editSpecificTask ? "Edit Task" : "New Task"),
           actions: [
             if (widget.editSpecificTask)
@@ -363,6 +370,11 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
             newTask,
             widget.taskIndex!,
           );
+
+          if (remindMe == false) {
+            LocalNotificationsService()
+                .cancelSpecificNotification(widget.taskIndex!);
+          }
 
           showSnackBar(
             context,

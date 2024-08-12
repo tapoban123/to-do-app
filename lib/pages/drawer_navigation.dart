@@ -102,10 +102,8 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
       drawer: Drawer(
         child: Column(
           children: [
-            const DrawerHeader(
-              child: CircleAvatar(
-                child: Icon(Icons.list),
-              ),
+            DrawerHeader(
+              child: Image.asset("assets/images/to-do-list.png"),
             ),
             Expanded(
               flex: 9,
@@ -133,8 +131,26 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
               flex: 1,
               child: ListTile(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => SettingsPage(),
+                  Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        SettingsPage(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      final tween = Tween(
+                        begin: Offset(1, 0),
+                        end: Offset.zero,
+                      ).chain(
+                        CurveTween(curve: Curves.decelerate),
+                      );
+
+                      final animationOffset = animation.drive(tween);
+
+                      return SlideTransition(
+                        position: animationOffset,
+                        child: child,
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
                   ));
                 },
                 leading: Icon(Icons.settings),
