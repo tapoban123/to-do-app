@@ -20,20 +20,9 @@ class ReminderOption extends StatelessWidget {
         controller: textController,
         readOnly: true,
         decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.white,
-            ),
-          ),
-          labelStyle: const TextStyle(color: Colors.white),
           label: Text(tileLabel),
         ),
-        style: const TextStyle(color: Colors.white),
+        style: Theme.of(context).inputDecorationTheme.labelStyle,
         onTap: onTap,
         textAlign: TextAlign.center,
       ),

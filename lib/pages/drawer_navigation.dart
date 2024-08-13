@@ -27,15 +27,15 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
   List<Map<String, dynamic>> navItems = [
     {
       "icon": Icons.pending_actions,
-      "name": "Pending Tasks",
+      "name": "PENDING TASKS",
     },
     {
       "icon": Icons.checklist_rounded,
-      "name": "Completed Tasks",
+      "name": "COMPLETED TASKS",
     },
     {
       "icon": CupertinoIcons.info_circle,
-      "name": "About Page",
+      "name": "ABOUT",
     },
   ];
 
@@ -115,9 +115,23 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
                   return ListTile(
                     selected: (currentIndex == index) ? true : false,
                     selectedTileColor: Theme.of(context).focusColor,
-                    selectedColor: Colors.white,
+                    // selectedColor: Colors.white,
                     leading: Icon(eachItem["icon"]),
-                    title: Text(eachItem["name"]),
+                    title: Text(
+                      eachItem["name"],
+                      style: TextStyle(
+                        fontWeight: (currentIndex == index)
+                            ? FontWeight.w900
+                            : FontWeight.w400,
+                        letterSpacing: 3,
+                      ),
+                    ),
+                    iconColor: (currentIndex != index)
+                        ? Theme.of(context)
+                            .listTileTheme
+                            .iconColor!
+                            .withOpacity(0.5)
+                        : Theme.of(context).listTileTheme.titleTextStyle?.color,
                     onTap: () {
                       Provider.of<NavigationProvider>(context, listen: false)
                           .navigateToPage(index);

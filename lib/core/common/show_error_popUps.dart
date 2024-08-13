@@ -27,7 +27,6 @@ void showErrorDialog(
       ),
       title: Text(
         titleText,
-        style: TextStyle(fontSize: 30),
       ),
       content: SizedBox(
         height: 80,
@@ -36,7 +35,6 @@ void showErrorDialog(
           children: [
             Text(
               contentText,
-              style: TextStyle(fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ],

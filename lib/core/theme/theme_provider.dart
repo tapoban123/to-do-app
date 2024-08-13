@@ -3,16 +3,22 @@ import 'package:simple_todo_app/hive_database/shared_preferences_local_storage.d
 
 class ThemeProvider extends ChangeNotifier {
   late ThemeData _currentTheme;
+  late String _themeText;
   late bool _isDark;
+
+  String _lightModeText = "Switch to light mode";
+  String _darkModeText = "Switch to dark mode";
 
   ThemeProvider({
     required bool isDark,
   }) {
     _isDark = isDark;
     this._currentTheme = _isDark ? ThemeData.dark() : ThemeData.light();
+    this._themeText = _isDark ? _lightModeText : _darkModeText;
   }
 
   ThemeData get getCurrentTheme => _currentTheme;
+  String get themeText => _themeText;
 
   bool isDarkTheme() {
     if (_currentTheme == ThemeData.dark()) {
@@ -25,9 +31,11 @@ class ThemeProvider extends ChangeNotifier {
   void changeTheme({required bool toDarkTheme}) {
     if (toDarkTheme) {
       _currentTheme = ThemeData.dark();
+      _themeText = _lightModeText;
       _isDark = true;
     } else {
       _currentTheme = ThemeData.light();
+      _themeText = _darkModeText;
       _isDark = false;
     }
 

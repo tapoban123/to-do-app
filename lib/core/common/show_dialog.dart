@@ -35,7 +35,6 @@ void showConfirmationDialog({
         ),
         title: Text(
           titleText,
-          style: TextStyle(fontSize: 30),
         ),
         content: SizedBox(
           height: 80,
@@ -44,7 +43,6 @@ void showConfirmationDialog({
             children: [
               Text(
                 contentText,
-                style: TextStyle(fontSize: 15),
                 textAlign: TextAlign.center,
               ),
             ],

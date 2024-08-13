@@ -17,39 +17,40 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    switchValue = Provider.of<ThemeProvider>(context).isDarkTheme();
-
-    if (switchValue == false) {
-      switchThumbColor = Colors.black;
-    } else {
-      switchThumbColor = Colors.white;
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings Page"),
+        title: Text("SETTINGS"),
       ),
-      body: ListTile(
-        title: Text("Theme"),
-        trailing: CupertinoSwitch(
-          thumbColor: switchThumbColor,
-          activeColor: Colors.grey[350],
-          value: !switchValue,
-          dragStartBehavior: DragStartBehavior.down,
-          onChanged: (value) {
-            if (switchValue) {
-              Provider.of<ThemeProvider>(context, listen: false)
-                  .changeTheme(toDarkTheme: false);
-            } else {
-              Provider.of<ThemeProvider>(context, listen: false)
-                  .changeTheme(toDarkTheme: true);
-            }
+      body: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          switchValue = themeProvider.isDarkTheme();
 
-            setState(() {
-              switchValue = !switchValue;
-            });
-          },
-        ),
+          if (switchValue == false) {
+            switchThumbColor = Colors.black;
+          } else {
+            switchThumbColor = Colors.white;
+          }
+
+          return ListTile(
+            title: Text(
+              themeProvider.themeText,
+              style: TextStyle(fontSize: 16),
+            ),
+            trailing: CupertinoSwitch(
+              thumbColor: switchThumbColor,
+              activeColor: Colors.grey[350],
+              value: !switchValue,
+              dragStartBehavior: DragStartBehavior.down,
+              onChanged: (value) {
+                if (switchValue) {
+                  themeProvider.changeTheme(toDarkTheme: false);
+                } else {
+                  themeProvider.changeTheme(toDarkTheme: true);
+                }
+              },
+            ),
+          );
+        },
       ),
     );
   }

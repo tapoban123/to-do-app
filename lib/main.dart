@@ -7,6 +7,7 @@ import 'package:simple_todo_app/core/navigation_service/navigation_service.dart'
 import 'package:simple_todo_app/core/providers/navigation_provider.dart';
 import 'package:simple_todo_app/core/providers/schedule_date_time_provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
+import 'package:simple_todo_app/core/theme/themes.dart';
 import 'package:simple_todo_app/hive_database/completed_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/shared_preferences_local_storage.dart';
@@ -49,6 +50,8 @@ class SimpleTodoApp extends StatefulWidget {
 class _SimpleTodoAppState extends State<SimpleTodoApp> {
   late ThemeData currentTheme;
 
+  CustomThemes myCustomTheme = CustomThemes();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -70,7 +73,13 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
         builder: (context, themeProvider, child) => MaterialApp(
           navigatorKey: NavigationService.navigatorKey,
           debugShowCheckedModeBanner: false,
-          theme: themeProvider.getCurrentTheme,
+          theme: themeProvider.getCurrentTheme.copyWith(
+            appBarTheme: myCustomTheme.getCustomAppBarTheme(context),
+            listTileTheme: myCustomTheme.getCustomListTileTheme(context),
+            textTheme: myCustomTheme.getCustomTextTheme(context),
+            dialogTheme: myCustomTheme.getCustomDialogTheme(context),
+            inputDecorationTheme: myCustomTheme.getTextFormFieldTheme(context),
+          ),
           title: "Simple Todo App",
           initialRoute: "/",
           routes: {

@@ -14,7 +14,15 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text("My Tasks"),
+      title: const Text(
+        "PENDING TASKS",
+        // style: TextStyle(
+        //   fontFamily: "OpenSans",
+        //   letterSpacing: 3,
+        //   color: Colors.white,
+        //   fontWeight: FontWeight.w900,
+        // ),
+      ),
       centerTitle: true,
       actions: [
         // TextButton(

@@ -10,7 +10,7 @@ class AboutPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text("About Page"),
+      title: Text("ABOUT"),
     );
   }
 }

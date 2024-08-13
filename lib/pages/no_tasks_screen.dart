@@ -27,10 +27,7 @@ class NoTasksScreen extends StatelessWidget {
             child: Text(
               pageContentText,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
           SizedBox(

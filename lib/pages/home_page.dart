@@ -36,163 +36,178 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Consumer<PendingTasksDbServices>(
-          builder: (context, pendingTasksProvider, child) {
-            if (pendingTasksProvider.getAllTasks.isEmpty) {
-              if (firstRun) {
-                pendingTasksProvider.storePreviousData();
-                firstRun = false;
-              }
-
-              return NoTasksScreen(
-                buttonColor: Colors.purple[700]!,
-                buttonText: "Create a task now",
-                onButtonTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CreateTaskPage(),
-                  ));
-                },
-                pageContentText: "You do not have any pending tasks right now.",
-              );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Consumer<PendingTasksDbServices>(
+        builder: (context, pendingTasksProvider, child) {
+          if (pendingTasksProvider.getAllTasks.isEmpty) {
+            if (firstRun) {
+              pendingTasksProvider.storePreviousData();
+              firstRun = false;
             }
-            return Column(
-              children: [
-                Expanded(
-                  child: ReorderableListView.builder(
-                    scrollController: widget.scrollDirection,
-                    scrollDirection: Axis.vertical,
-                    itemCount: pendingTasksProvider.getAllTasks.length,
-                    onReorder: (int oldIndex, int newIndex) {
-                      pendingTasksProvider.reOrderTasks(
-                        oldIndex: oldIndex,
-                        newIndex: newIndex,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      final eachTask = pendingTasksProvider.getAllTasks[index];
-                      checkBoxValues.add(false);
 
-                      return Padding(
-                        key: ValueKey(index),
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: ListTile(
-                          splashColor: Colors.transparent,
-                          // leading: Icon(Icons.pending_actions_sharp),
-                          leading: Icon(Icons.drag_handle_rounded),
-                          title: Text(eachTask.taskTitle),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                            side:
-                                BorderSide(color: Theme.of(context).hintColor),
-                          ),
-                          subtitle: eachTask.taskDescription.isEmpty
-                              ? null
-                              : Text(
-                                  eachTask.taskDescription,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              PageRouteBuilder(
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) =>
-                                        CreateTaskPage(
-                                  oldTask: eachTask,
-                                  editSpecificTask: true,
-                                  taskIndex: index,
-                                ),
-                                transitionsBuilder: (context, animation,
-                                    secondaryAnimation, child) {
-                                  final tween = Tween(
-                                    begin: Offset(0, 1),
-                                    end: Offset.zero,
-                                  ).chain(
-                                    CurveTween(
-                                      curve: Curves.fastLinearToSlowEaseIn,
-                                    ),
-                                  );
+            return NoTasksScreen(
+              buttonColor: Colors.purple[700]!,
+              buttonText: "Create a task now",
+              onButtonTap: () {
+                Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      CreateTaskPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    final tween = Tween(
+                      begin: Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(
+                      CurveTween(curve: Curves.linearToEaseOut),
+                    );
 
-                                  final animationOffset =
-                                      animation.drive(tween);
+                    final animationOffset = animation.drive(tween);
+                    return SlideTransition(
+                      position: animationOffset,
+                      child: child,
+                    );
+                  },
+                ));
+              },
+              pageContentText: "You do not have any pending tasks right now.",
+            );
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: ReorderableListView.builder(
+                  scrollController: widget.scrollDirection,
+                  scrollDirection: Axis.vertical,
+                  itemCount: pendingTasksProvider.getAllTasks.length,
+                  onReorder: (int oldIndex, int newIndex) {
+                    pendingTasksProvider.reOrderTasks(
+                      oldIndex: oldIndex,
+                      newIndex: newIndex,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    final eachTask = pendingTasksProvider.getAllTasks[index];
+                    checkBoxValues.add(false);
 
-                                  return SlideTransition(
-                                    position: animationOffset,
-                                    child: child,
-                                  );
-                                },
-                                transitionDuration: Duration(milliseconds: 500),
-                              ),
-                            );
-                          },
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              eachTask.remindMe
-                                  ? Tooltip(
-                                      triggerMode: TooltipTriggerMode.longPress,
-                                      child: ScheduledTaskIcon(),
-                                      message: "Scheduled Task",
-                                    )
-                                  : SizedBox.shrink(),
-                              (eachTask.isImportant && eachTask.remindMe)
-                                  ? SizedBox(
-                                      width: 10,
-                                    )
-                                  : SizedBox.shrink(),
-                              eachTask.isImportant
-                                  ? Tooltip(
-                                      triggerMode: TooltipTriggerMode.longPress,
-                                      child: ImportantTaskIcon(),
-                                      message: "Important Task",
-                                    )
-                                  : SizedBox.shrink(),
-                              Checkbox(
-                                checkColor: Colors.black,
-                                activeColor: Colors.white.withOpacity(0.8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                onChanged: (value) async {
-                                  setState(() {
-                                    checkBoxValues[index] =
-                                        !checkBoxValues[index];
-                                  });
-                                  showSnackBar(
-                                    context,
-                                    "Yay! You just completed a task.",
-                                    Colors.deepPurpleAccent,
-                                  );
-
-                                  await Future.delayed(
-                                    Duration(milliseconds: 300),
-                                  );
-
-                                  Provider.of<CompletedTasksDbServices>(
-                                    context,
-                                    listen: false,
-                                  ).addTask(eachTask);
-
-                                  checkBoxValues.removeAt(index);
-
-                                  pendingTasksProvider
-                                      .deleteSpecificTask(index);
-                                },
-                                value: checkBoxValues[index],
-                              ),
-                            ],
+                    return Padding(
+                      key: ValueKey(index),
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: ListTile(
+                        splashColor: Colors.transparent,
+                        leading: Icon(Icons.drag_handle_rounded),
+                        title: Text(
+                          eachTask.taskTitle,
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
                         ),
-                      );
-                    },
-                  ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                          side: BorderSide(color: Theme.of(context).hintColor),
+                        ),
+                        subtitle: eachTask.taskDescription.isEmpty
+                            ? null
+                            : Text(
+                                eachTask.taskDescription,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                        onTap: () {
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      CreateTaskPage(
+                                oldTask: eachTask,
+                                editSpecificTask: true,
+                                taskIndex: index,
+                              ),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final tween = Tween(
+                                  begin: Offset(0, 1),
+                                  end: Offset.zero,
+                                ).chain(
+                                  CurveTween(
+                                    curve: Curves.fastLinearToSlowEaseIn,
+                                  ),
+                                );
+
+                                final animationOffset = animation.drive(tween);
+
+                                return SlideTransition(
+                                  position: animationOffset,
+                                  child: child,
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 500),
+                            ),
+                          );
+                        },
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            eachTask.remindMe
+                                ? Tooltip(
+                                    triggerMode: TooltipTriggerMode.longPress,
+                                    child: ScheduledTaskIcon(),
+                                    message: "Scheduled Task",
+                                  )
+                                : SizedBox.shrink(),
+                            (eachTask.isImportant && eachTask.remindMe)
+                                ? SizedBox(
+                                    width: 10,
+                                  )
+                                : SizedBox.shrink(),
+                            eachTask.isImportant
+                                ? Tooltip(
+                                    triggerMode: TooltipTriggerMode.longPress,
+                                    child: ImportantTaskIcon(),
+                                    message: "Important Task",
+                                  )
+                                : SizedBox.shrink(),
+                            Checkbox(
+                              checkColor: Colors.black,
+                              activeColor: Colors.white.withOpacity(0.8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              onChanged: (value) async {
+                                setState(() {
+                                  checkBoxValues[index] =
+                                      !checkBoxValues[index];
+                                });
+                                showSnackBar(
+                                  context,
+                                  "Yay! You just completed a task.",
+                                  Colors.deepPurpleAccent,
+                                );
+
+                                await Future.delayed(
+                                  Duration(milliseconds: 300),
+                                );
+
+                                Provider.of<CompletedTasksDbServices>(
+                                  context,
+                                  listen: false,
+                                ).addTask(eachTask);
+
+                                checkBoxValues.removeAt(index);
+
+                                pendingTasksProvider.deleteSpecificTask(index);
+                              },
+                              value: checkBoxValues[index],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

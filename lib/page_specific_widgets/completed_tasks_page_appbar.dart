@@ -17,7 +17,7 @@ class CompletedTasksPageAppbar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text("Completed Tasks"),
+      title: Text("COMPLETED TASKS"),
       centerTitle: true,
       actions: [
         IconButton(

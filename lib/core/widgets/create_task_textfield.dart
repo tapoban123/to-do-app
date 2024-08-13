@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 class CreateTaskTextfield extends StatefulWidget {
   final TextEditingController textController;
   final String hintText;
-  final OutlineInputBorder focusedBorder;
-  final OutlineInputBorder enabledBorder;
   final TextInputAction textInputAction;
   final double? fontSize;
   final int? maxLines;
@@ -12,8 +10,6 @@ class CreateTaskTextfield extends StatefulWidget {
   const CreateTaskTextfield({
     super.key,
     required this.textController,
-    required this.enabledBorder,
-    required this.focusedBorder,
     required this.hintText,
     required this.textInputAction,
     this.fontSize,
@@ -30,14 +26,15 @@ class _CreateTaskTextfieldState extends State<CreateTaskTextfield> {
     return TextFormField(
       controller: widget.textController,
       decoration: InputDecoration(
-        focusedBorder: widget.focusedBorder,
-        enabledBorder: widget.enabledBorder,
         hintText: widget.hintText,
       ),
-      style: TextStyle(fontSize: widget.fontSize ?? widget.fontSize),
+      style: Theme.of(context)
+          .textTheme
+          .headlineMedium!
+          .copyWith(fontSize: widget.fontSize ?? widget.fontSize),
       textInputAction: widget.textInputAction,
       keyboardType: TextInputType.multiline,
-      cursorColor: Colors.white,
+      cursorColor: Theme.of(context).textTheme.headlineMedium!.color,
       maxLines: widget.maxLines,
     );
   }
