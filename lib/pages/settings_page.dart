@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
 
+/// Implements the `Settings Page` of the application
 class SettingsPage extends StatefulWidget {
   SettingsPage({super.key});
 

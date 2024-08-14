@@ -12,6 +12,10 @@ import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/home_page.dart';
 import 'package:simple_todo_app/pages/settings_page.dart';
 
+
+/// This is the `navigationHandler page`.
+/// 
+/// It `returns the appropriate page` when the user navigates through the Drawer widgets.
 class DrawerNavigation extends StatefulWidget {
   DrawerNavigation({super.key});
 
@@ -51,6 +55,7 @@ class _DrawerNavigationState extends State<DrawerNavigation> {
     return pages;
   }
 
+  /// Returns the appropriate AppBars for each page
   PreferredSizeWidget returnPageSpecificAppBars() {
     switch (currentIndex) {
       case 0:

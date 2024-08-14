@@ -11,6 +11,9 @@ import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/pages/create_task_page.dart';
 import 'package:simple_todo_app/pages/no_tasks_screen.dart';
 
+/// The [HomePage] displays all the tasks are `yet to be completed by the user`.
+/// 
+/// This page can also be called `PendingTasksPage`.
 class HomePage extends StatefulWidget {
   final ScrollController scrollDirection;
 

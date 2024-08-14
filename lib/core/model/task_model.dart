@@ -77,25 +77,24 @@ class TaskModel {
   @override
   bool operator ==(covariant TaskModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.taskId == taskId &&
-      other.taskTitle == taskTitle &&
-      other.taskDescription == taskDescription &&
-      other.isImportant == isImportant &&
-      other.remindMe == remindMe &&
-      other.creationDate == creationDate &&
-      other.creationTime == creationTime;
+
+    return other.taskId == taskId &&
+        other.taskTitle == taskTitle &&
+        other.taskDescription == taskDescription &&
+        other.isImportant == isImportant &&
+        other.remindMe == remindMe &&
+        other.creationDate == creationDate &&
+        other.creationTime == creationTime;
   }
 
   @override
   int get hashCode {
     return taskId.hashCode ^
-      taskTitle.hashCode ^
-      taskDescription.hashCode ^
-      isImportant.hashCode ^
-      remindMe.hashCode ^
-      creationDate.hashCode ^
-      creationTime.hashCode;
+        taskTitle.hashCode ^
+        taskDescription.hashCode ^
+        isImportant.hashCode ^
+        remindMe.hashCode ^
+        creationDate.hashCode ^
+        creationTime.hashCode;
   }
 }

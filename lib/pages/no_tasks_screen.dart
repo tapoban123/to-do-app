@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'completed_tasks_page.dart';
+import 'home_page.dart';
 
+/// The [NoTasksScreen] is displayed when `no tasks are found` on [CompletedTasksPage] or [HomePage].
 class NoTasksScreen extends StatelessWidget {
   final VoidCallback onButtonTap;
   final String buttonText;
