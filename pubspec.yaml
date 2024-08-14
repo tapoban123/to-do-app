@@ -44,6 +44,7 @@ dependencies:
   flutter_timezone: ^2.1.0
   flutter_bloc: ^8.1.6
   shared_preferences: ^2.3.1
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   build_runner: ^2.4.11
@@ -77,6 +78,10 @@ flutter:
   assets:
     - assets/images/double_check_mark.png
     - assets/images/to-do-list.png
+    - assets/images/my_photo.png
+    - assets/images/github_logo.png
+    - assets/images/linkedin_logo.png
+    - assets/images/twitter_logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

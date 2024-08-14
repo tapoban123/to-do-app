@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 class TaskModel {
+  final int taskId;
   final String taskTitle;
   final String taskDescription;
   final bool isImportant;
@@ -10,6 +11,7 @@ class TaskModel {
   final String creationTime;
 
   TaskModel({
+    required this.taskId,
     required this.taskTitle,
     required this.taskDescription,
     required this.isImportant,
@@ -19,6 +21,7 @@ class TaskModel {
   });
 
   TaskModel copyWith({
+    int? taskId,
     String? taskTitle,
     String? taskDescription,
     bool? isImportant,
@@ -27,6 +30,7 @@ class TaskModel {
     String? creationTime,
   }) {
     return TaskModel(
+      taskId: taskId ?? this.taskId,
       taskTitle: taskTitle ?? this.taskTitle,
       taskDescription: taskDescription ?? this.taskDescription,
       isImportant: isImportant ?? this.isImportant,
@@ -38,6 +42,7 @@ class TaskModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'taskId': taskId,
       'taskTitle': taskTitle,
       'taskDescription': taskDescription,
       'isImportant': isImportant,
@@ -49,6 +54,7 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
+      taskId: map['taskId'] as int,
       taskTitle: map['taskTitle'] as String,
       taskDescription: map['taskDescription'] as String,
       isImportant: map['isImportant'] as bool,
@@ -65,28 +71,31 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(taskTitle: $taskTitle, taskDescription: $taskDescription, isImportant: $isImportant, remindMe: $remindMe, creationDate: $creationDate, creationTime: $creationTime)';
+    return 'TaskModel(taskId: $taskId, taskTitle: $taskTitle, taskDescription: $taskDescription, isImportant: $isImportant, remindMe: $remindMe, creationDate: $creationDate, creationTime: $creationTime)';
   }
 
   @override
   bool operator ==(covariant TaskModel other) {
     if (identical(this, other)) return true;
-
-    return other.taskTitle == taskTitle &&
-        other.taskDescription == taskDescription &&
-        other.isImportant == isImportant &&
-        other.remindMe == remindMe &&
-        other.creationDate == creationDate &&
-        other.creationTime == creationTime;
+  
+    return 
+      other.taskId == taskId &&
+      other.taskTitle == taskTitle &&
+      other.taskDescription == taskDescription &&
+      other.isImportant == isImportant &&
+      other.remindMe == remindMe &&
+      other.creationDate == creationDate &&
+      other.creationTime == creationTime;
   }
 
   @override
   int get hashCode {
-    return taskTitle.hashCode ^
-        taskDescription.hashCode ^
-        isImportant.hashCode ^
-        remindMe.hashCode ^
-        creationDate.hashCode ^
-        creationTime.hashCode;
+    return taskId.hashCode ^
+      taskTitle.hashCode ^
+      taskDescription.hashCode ^
+      isImportant.hashCode ^
+      remindMe.hashCode ^
+      creationDate.hashCode ^
+      creationTime.hashCode;
   }
 }

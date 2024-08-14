@@ -112,7 +112,7 @@ class CustomThemes {
         borderSide: BorderSide(color: borderColor),
       ),
       hintStyle: TextStyle(
-        color: fontColor,
+        color: fontColor.withOpacity(0.4),
         fontFamily: "OpenSans",
       ),
       labelStyle: TextStyle(

@@ -73,7 +73,7 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                             padding: const EdgeInsets.only(right: 10.0),
                             child: Image.asset(
                               "assets/images/double_check_mark.png",
-                              color: Colors.white,
+                              color: Theme.of(context).textTheme.headlineMedium!.color,
                               height: 25,
                             ),
                           ),
@@ -89,9 +89,10 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                               IconButton(
                                 tooltip: "Re-assign task",
                                 onPressed: () {
-                                  Provider.of<PendingTasksDbServices>(context,
-                                          listen: false)
-                                      .addTask(newTask: eachTask);
+                                  Provider.of<PendingTasksDbServices>(
+                                    context,
+                                    listen: false,
+                                  ).addTask(newTask: eachTask);
 
                                   completedTasksProvider
                                       .deleteSpecificTask(index);

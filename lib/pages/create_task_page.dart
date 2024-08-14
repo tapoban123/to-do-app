@@ -335,15 +335,17 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
   void createOrEditTask({bool editTask = false}) async {
     if (newTaskTitleController.text.isNotEmpty) {
+      int currentTaskId =
+          Provider.of<PendingTasksDbServices>(context, listen: false)
+                  .getCurrentTaskIndex +
+              1;
       try {
         if (remindMe && (editTask == false)) {
           print("entered");
-          int currentTaskIndex =
-              Provider.of<PendingTasksDbServices>(context, listen: false)
-                  .getCurrentTaskIndex;
-          print(currentTaskIndex);
+
+          print(currentTaskId);
           await LocalNotificationsService().showScheduledNotification(
-            notificationID: currentTaskIndex,
+            notificationID: currentTaskId,
             title: "You have one pending task",
             description: newTaskTitleController.text,
             scheduledDateTime: scheduledDateTime(remindMeDate, remindMeTime),
@@ -351,6 +353,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         }
 
         TaskModel newTask = TaskModel(
+          taskId: editTask ? widget.oldTask!.taskId : currentTaskId,
           taskTitle: newTaskTitleController.text,
           taskDescription: newTaskDescriptionController.text,
           isImportant: isImportant,
@@ -372,15 +375,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
           if (remindMe == false) {
             print("Cancelled edited task");
+            print(widget.oldTask!.taskId);
             LocalNotificationsService()
-                .cancelSpecificNotification(widget.taskIndex! + 1);
+                .cancelSpecificNotification(widget.oldTask!.taskId);
           } else {
             if (selectedNewScheduleDateTime) {
               LocalNotificationsService()
-                  .cancelSpecificNotification(widget.taskIndex!);
+                  .cancelSpecificNotification(widget.oldTask!.taskId);
 
               await LocalNotificationsService().showScheduledNotification(
-                notificationID: widget.taskIndex!,
+                notificationID: widget.oldTask!.taskId,
                 title: "You have one pending task",
                 description: newTaskTitleController.text,
                 scheduledDateTime: scheduledDateTime(

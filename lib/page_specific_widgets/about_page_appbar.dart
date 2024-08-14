@@ -11,6 +11,9 @@ class AboutPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text("ABOUT"),
+      surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      centerTitle: true,
+      forceMaterialTransparency: false,
     );
   }
 }

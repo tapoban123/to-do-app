@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_snackbar.dart';
 import 'package:simple_todo_app/core/local_notifications/local_notifications_service.dart';
+import 'package:simple_todo_app/core/model/task_model.dart';
 
 import 'package:simple_todo_app/core/widgets/important_task_icon.dart';
 import 'package:simple_todo_app/core/widgets/scheduled_task_icon.dart';
@@ -179,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                 });
                                 showSnackBar(
                                   context,
-                                  "Yay! You just completed a task.",
+                                  "\u{1F600} Yay! You just completed a task.",
                                   Colors.deepPurpleAccent,
                                 );
 
@@ -187,10 +188,23 @@ class _HomePageState extends State<HomePage> {
                                   Duration(milliseconds: 300),
                                 );
 
+                                TaskModel completedTask = TaskModel(
+                                  taskId: eachTask.taskId,
+                                  taskTitle: eachTask.taskTitle,
+                                  taskDescription: eachTask.taskDescription,
+                                  isImportant: false,
+                                  remindMe: false,
+                                  creationDate: eachTask.creationDate,
+                                  creationTime: eachTask.creationTime,
+                                );
+                                LocalNotificationsService()
+                                    .cancelSpecificNotification(
+                                        completedTask.taskId);
+
                                 Provider.of<CompletedTasksDbServices>(
                                   context,
                                   listen: false,
-                                ).addTask(eachTask);
+                                ).addTask(completedTask);
 
                                 checkBoxValues.removeAt(index);
 
