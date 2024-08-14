@@ -80,7 +80,7 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
             dialogTheme: myCustomTheme.getCustomDialogTheme(context),
             inputDecorationTheme: myCustomTheme.getTextFormFieldTheme(context),
           ),
-          title: "Simple Todo App",
+          title: "Quick List",
           initialRoute: "/",
           routes: {
             "/": (context) => DrawerNavigation(),

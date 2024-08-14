@@ -42,6 +42,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   bool remindMe = false;
   bool isImportant = false;
   bool firstRun = true;
+  bool selectedNewScheduleDateTime = false;
 
   DateTime remindMeDate = DateTime.now();
   TimeOfDay remindMeTime = TimeOfDay.now();
@@ -277,7 +278,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         if (newSelectedDate != null) {
           Provider.of<ScheduleDateTimeProvider>(context, listen: false)
               .changeDate(newSelectedDate);
-
+          selectedNewScheduleDateTime = true;
           remindMeDate = newSelectedDate;
         }
       },
@@ -304,6 +305,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
 
           Provider.of<ScheduleDateTimeProvider>(context, listen: false)
               .changeTime(selectedTime);
+          selectedNewScheduleDateTime = true;
         }
       },
     );
@@ -334,11 +336,12 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   void createOrEditTask({bool editTask = false}) async {
     if (newTaskTitleController.text.isNotEmpty) {
       try {
-        if (remindMe) {
+        if (remindMe && (editTask == false)) {
+          print("entered");
           int currentTaskIndex =
               Provider.of<PendingTasksDbServices>(context, listen: false)
                   .getCurrentTaskIndex;
-
+          print(currentTaskIndex);
           await LocalNotificationsService().showScheduledNotification(
             notificationID: currentTaskIndex,
             title: "You have one pending task",
@@ -368,8 +371,24 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           );
 
           if (remindMe == false) {
+            print("Cancelled edited task");
             LocalNotificationsService()
-                .cancelSpecificNotification(widget.taskIndex!);
+                .cancelSpecificNotification(widget.taskIndex! + 1);
+          } else {
+            if (selectedNewScheduleDateTime) {
+              LocalNotificationsService()
+                  .cancelSpecificNotification(widget.taskIndex!);
+
+              await LocalNotificationsService().showScheduledNotification(
+                notificationID: widget.taskIndex!,
+                title: "You have one pending task",
+                description: newTaskTitleController.text,
+                scheduledDateTime: scheduledDateTime(
+                  remindMeDate,
+                  remindMeTime,
+                ),
+              );
+            }
           }
 
           showSnackBar(
