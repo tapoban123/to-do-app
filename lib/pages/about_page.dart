@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
 import 'package:simple_todo_app/core/widgets/about_page_text_button.dart';
@@ -46,7 +45,7 @@ class _AboutPageState extends State<AboutPage> {
                       .withOpacity(0.9),
                   fontWeight: FontWeight.bold,
                   wordSpacing: 4,
-                  fontSize: 25,
+                  fontSize: 32,
                 ),
                 children: <TextSpan>[
                   TextSpan(
@@ -123,15 +122,15 @@ class _AboutPageState extends State<AboutPage> {
           ),
           Container(
             width: double.infinity,
-            height: 700,
+            height: 405,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+                topLeft: Radius.circular(50),
+                topRight: Radius.circular(50),
               ),
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
                 colors: [
                   Color(0xff0052D4),
                   Color(0xff4364F7),
@@ -154,7 +153,7 @@ class _AboutPageState extends State<AboutPage> {
                     child: Text(
                       "About the Developer",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontFamily: "RobotoSlab",
                         fontWeight: FontWeight.bold,
                         wordSpacing: 2,
@@ -163,11 +162,7 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
-                ),
-                CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/my_photo.png"),
-                  radius: 100,
+                  height: 15,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0)
@@ -183,8 +178,6 @@ class _AboutPageState extends State<AboutPage> {
                             RichText(
                               textAlign: TextAlign.center,
                               text: TextSpan(
-                                text:
-                                    "Hello! I'm Tapoban Ray, a passionate Android Developer",
                                 style: TextStyle(
                                   fontFamily: "RobotoSlab",
                                   wordSpacing: 3,
@@ -192,11 +185,23 @@ class _AboutPageState extends State<AboutPage> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: " a passionate Android Developer ",
+                                    text: "Tapoban Ray",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 2,
+                                    ),
                                   ),
                                   TextSpan(
-                                      text:
-                                          "with a love for creating user-friendly and practical applications. "),
+                                    text: "\nA passionate Android Developer ",
+                                    style: TextStyle(
+                                      height: 2,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        "with a love for creating user-friendly and practical applications. ",
+                                  ),
                                 ],
                               ),
                             ),
@@ -209,15 +214,6 @@ class _AboutPageState extends State<AboutPage> {
                                 color: Colors.white.withOpacity(0.5),
                               ),
                             ),
-                            Text(
-                              "Currently, I'm persuing B.Tech course in Computer Science Engineering at Calcutta Institute of Engineering and Management (CIEM).",
-                              style: TextStyle(
-                                fontFamily: "RobotoSlab",
-                                wordSpacing: 3,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.start,
-                            )
                           ],
                         ),
                       )
@@ -233,7 +229,7 @@ class _AboutPageState extends State<AboutPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Contact me on:",
+                      "Contact the Developer :",
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "RobotoSlab",

@@ -15,6 +15,7 @@ import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/create_task_page.dart';
 import 'package:simple_todo_app/pages/drawer_navigation.dart';
+import 'package:simple_todo_app/pages/settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,13 +81,13 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
             dialogTheme: myCustomTheme.getCustomDialogTheme(context),
             inputDecorationTheme: myCustomTheme.getTextFormFieldTheme(context),
           ),
-          title: "Quick List",
           initialRoute: "/",
           routes: {
             "/": (context) => DrawerNavigation(),
             "/createTasksPage": (context) => CreateTaskPage(),
             "/completedTasksPage": (context) => CompletedTasksPage(),
             "/aboutPage": (context) => AboutPage(),
+            "/settings": (context) => SettingsPage(),
           },
         ),
       ),

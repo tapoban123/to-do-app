@@ -1,4 +1,4 @@
-package com.example.simple_todo_app
+package com.tapoban.quick_list
 
 import io.flutter.embedding.android.FlutterActivity
 

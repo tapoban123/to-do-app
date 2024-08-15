@@ -78,7 +78,6 @@ flutter:
   assets:
     - assets/images/double_check_mark.png
     - assets/images/to-do-list.png
-    - assets/images/my_photo.png
     - assets/images/github_logo.png
     - assets/images/linkedin_logo.png
     - assets/images/twitter_logo.png

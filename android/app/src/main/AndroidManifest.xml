@@ -4,8 +4,9 @@
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="Quick List"
+        android:label="QuickList"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
