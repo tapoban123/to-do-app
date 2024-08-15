@@ -6,13 +6,17 @@ import 'home_page.dart';
 class NoTasksScreen extends StatelessWidget {
   final VoidCallback onButtonTap;
   final String buttonText;
-  final Color buttonColor;
+  final List<Color> gradientColors;
+  final Alignment gradientBegin;
+  final Alignment gradientEnd;
   final String pageContentText;
 
   const NoTasksScreen({
     super.key,
     required this.buttonText,
-    required this.buttonColor,
+    required this.gradientColors,
+    required this.gradientBegin,
+    required this.gradientEnd,
     required this.onButtonTap,
     required this.pageContentText,
   });
@@ -36,19 +40,32 @@ class NoTasksScreen extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(200, 50),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              backgroundColor: buttonColor,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              gradient: LinearGradient(
+                begin: gradientBegin,
+                end: gradientEnd,
+                colors: gradientColors,
+              ),
             ),
-            onPressed: onButtonTap,
-            child: Text(
-              buttonText,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 1.0,
+                minimumSize: Size(200, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                backgroundColor: Colors.transparent,
+              ),
+              onPressed: onButtonTap,
+              child: Text(
+                buttonText,
+                style: TextStyle(
+                  fontFamily: "OpenSans",
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
               ),
             ),
           )

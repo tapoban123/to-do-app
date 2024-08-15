@@ -7,43 +7,57 @@ class HomePageFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      clipBehavior: Clip.none,
-      backgroundColor: Colors.blueAccent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-      onPressed: () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const CreateTaskPage(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              final tween = Tween(
-                begin: Offset(1, 0),
-                end: Offset.zero,
-              ).chain(
-                CurveTween(curve: Curves.fastEaseInToSlowEaseOut),
-              );
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xff0052D4),
+            Color(0xff4364F7),
+            Color(0xff6FB1FC),
+          ],
+        ),
+        shape: BoxShape.circle,
+      ),
+      child: FloatingActionButton(
+        clipBehavior: Clip.none,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+        onPressed: () {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  const CreateTaskPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                final tween = Tween(
+                  begin: Offset(1, 0),
+                  end: Offset.zero,
+                ).chain(
+                  CurveTween(curve: Curves.fastEaseInToSlowEaseOut),
+                );
 
-              final offsetAnimation = animation.drive(tween);
+                final offsetAnimation = animation.drive(tween);
 
-              return SlideTransition(
-                position: offsetAnimation,
-                child: child,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 500),
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              },
+              transitionDuration: Duration(milliseconds: 500),
+            ),
+          );
+        },
+        child: Text(
+          String.fromCharCode(CupertinoIcons.add.codePoint),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontFamily: CupertinoIcons.add.fontFamily,
+            package: CupertinoIcons.add.fontPackage,
+            fontSize: 26,
+            color: Colors.white,
           ),
-        );
-      },
-      child: Text(
-        String.fromCharCode(CupertinoIcons.add.codePoint),
-        style: TextStyle(
-          fontWeight: FontWeight.w600,
-          fontFamily: CupertinoIcons.add.fontFamily,
-          package: CupertinoIcons.add.fontPackage,
-          fontSize: 26,
-          color: Colors.white,
         ),
       ),
     );

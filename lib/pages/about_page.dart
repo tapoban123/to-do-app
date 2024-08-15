@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_todo_app/core/theme/theme_provider.dart';
 import 'package:simple_todo_app/core/widgets/about_page_text_button.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 /// This page `displays a brief description` of the application along with
 /// an introduction of it's developer and the developer's contact info
@@ -14,6 +16,8 @@ class AboutPage extends StatefulWidget {
 }
 
 class _AboutPageState extends State<AboutPage> {
+  late Color paragraphFontColor;
+
   ButtonStyle textButtonTheme = TextButton.styleFrom(
     backgroundColor: Color(0xff1E201E),
     shape: RoundedRectangleBorder(
@@ -33,7 +37,7 @@ class _AboutPageState extends State<AboutPage> {
                 const EdgeInsets.symmetric(horizontal: 30.0).copyWith(top: 30),
             child: RichText(
               text: TextSpan(
-                text: aboutTheAppTitle,
+                text: '"Stay Ahead of Your Day with ',
                 style: TextStyle(
                   color: Theme.of(context)
                       .textTheme
@@ -44,6 +48,12 @@ class _AboutPageState extends State<AboutPage> {
                   wordSpacing: 4,
                   fontSize: 25,
                 ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'QuickList - Your Ultimate Task Manager!"',
+                    style: TextStyle(color: Colors.amber[700]),
+                  )
+                ],
               ),
             ),
           ),
@@ -57,31 +67,79 @@ class _AboutPageState extends State<AboutPage> {
               child: Divider(),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: RichText(
-              text: TextSpan(
-                text: aboutTheApp,
-                style: TextStyle(
-                  fontFamily: "RobotoSlab",
-                  color: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .color!
-                      .withOpacity(0.6),
-                  wordSpacing: 3,
-                  height: 1.5,
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              if (themeProvider.getCurrentTheme == ThemeData.dark()) {
+                paragraphFontColor = Colors.greenAccent;
+              } else {
+                paragraphFontColor = Colors.pinkAccent;
+              }
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: RichText(
+                  text: TextSpan(
+                    text:
+                        "Welcome to our To-Do List app, designed to make your life easier with its ",
+                    style: TextStyle(
+                      fontFamily: "RobotoSlab",
+                      color: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .color!
+                          .withOpacity(0.6),
+                      wordSpacing: 3,
+                      height: 1.5,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "user-friendly interface ",
+                        style: TextStyle(color: paragraphFontColor),
+                      ),
+                      TextSpan(
+                        text: "and ",
+                      ),
+                      TextSpan(
+                        text: "intuitive design ",
+                        style: TextStyle(color: paragraphFontColor),
+                      ),
+                      TextSpan(
+                        text:
+                            "Managing tasks is a breeze—whether you're scheduling meetings, setting reminders, or creating simple to-do lists. ",
+                      ),
+                      TextSpan(
+                        text:
+                            "With timely notifications, you'll never miss an important task, helping you stay organized and boost your productivity effortlessly. ",
+                        style: TextStyle(color: paragraphFontColor),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           SizedBox(
             height: 50,
           ),
           Container(
             width: double.infinity,
-            height: 650,
-            decoration: BoxDecoration(color: Colors.blueAccent),
+            height: 700,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xff0052D4),
+                  Color(0xff4364F7),
+                  Color(0xff6FB1FC),
+                ],
+              ),
+              color: Colors.blueAccent,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -89,7 +147,7 @@ class _AboutPageState extends State<AboutPage> {
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 20,
-                    top: 20,
+                    top: 25,
                   ),
                   child: Align(
                     alignment: Alignment.topLeft,
@@ -99,6 +157,7 @@ class _AboutPageState extends State<AboutPage> {
                         fontSize: 20,
                         fontFamily: "RobotoSlab",
                         fontWeight: FontWeight.bold,
+                        wordSpacing: 2,
                       ),
                     ),
                   ),
@@ -121,17 +180,42 @@ class _AboutPageState extends State<AboutPage> {
                         width: 300,
                         child: Column(
                           children: [
-                            Text(
-                              "Hello! I'm Tapoban Ray, a passionate Android Developer with a love for creating user-friendly and practical applications.",
-                              style: TextStyle(fontFamily: "RobotoSlab"),
+                            RichText(
                               textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text:
+                                    "Hello! I'm Tapoban Ray, a passionate Android Developer",
+                                style: TextStyle(
+                                  fontFamily: "RobotoSlab",
+                                  wordSpacing: 3,
+                                  height: 1.5,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: " a passionate Android Developer ",
+                                  ),
+                                  TextSpan(
+                                      text:
+                                          "with a love for creating user-friendly and practical applications. "),
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              height: 5,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 5.0,
+                                bottom: 5.0,
+                              ),
+                              child: Divider(
+                                color: Colors.white.withOpacity(0.5),
+                              ),
                             ),
                             Text(
                               "Currently, I'm persuing B.Tech course in Computer Science Engineering at Calcutta Institute of Engineering and Management (CIEM).",
-                              style: TextStyle(fontFamily: "RobotoSlab"),
+                              style: TextStyle(
+                                fontFamily: "RobotoSlab",
+                                wordSpacing: 3,
+                                height: 1.5,
+                              ),
                               textAlign: TextAlign.start,
                             )
                           ],
@@ -154,6 +238,7 @@ class _AboutPageState extends State<AboutPage> {
                         fontSize: 16,
                         fontFamily: "RobotoSlab",
                         fontWeight: FontWeight.bold,
+                        wordSpacing: 2,
                       ),
                     ),
                   ),
@@ -228,10 +313,4 @@ class _AboutPageState extends State<AboutPage> {
       ),
     );
   }
-
-  final String aboutTheAppTitle =
-      '"Stay Ahead of Your Day with Quick List - Your Ultimate Task Manager!"';
-
-  final String aboutTheApp =
-      "Welcome to our To-Do List app, designed to make your life easier with its user-friendly interface and intuitive design. Managing tasks is a breeze—whether you're scheduling meetings, setting reminders, or creating simple to-do lists. With timely notifications, you'll never miss an important task, helping you stay organized and boost your productivity effortlessly.";
 }

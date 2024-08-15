@@ -51,7 +51,13 @@ class _HomePageState extends State<HomePage> {
             }
 
             return NoTasksScreen(
-              buttonColor: Colors.purple[700]!,
+              gradientBegin: Alignment.centerLeft,
+              gradientEnd: Alignment.centerRight,
+              gradientColors: [
+                  Color(0xfffe8500),
+                  Color(0xfffeae00),
+                  Color(0xfffdcf19),
+              ],
               buttonText: "Create a task now",
               onButtonTap: () {
                 Navigator.of(context).push(PageRouteBuilder(

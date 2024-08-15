@@ -14,12 +14,11 @@ import 'package:simple_todo_app/core/widgets/reminder_option.dart';
 import 'package:simple_todo_app/core/widgets/scheduled_task_icon.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 
-
 /// This page is returned when the user wants to `create or edit a task`.
-/// For editing purpose a boolean condition is checked. 
-/// 
+/// For editing purpose a boolean condition is checked.
+///
 /// IF condition is true: TaskEdit widgets are returned
-/// 
+///
 /// ELSE: CreateTask widgets are returned
 class CreateTaskPage extends StatefulWidget {
   final TaskModel? oldTask;
@@ -251,18 +250,35 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               if (widget.editSpecificTask == true)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
-                  child: ElevatedButton(
-                    onPressed: () => createOrEditTask(editTask: true),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xff000c91),
+                          Color(0xff3742b5),
+                          Color(0xff6b74d0),
+                          Color(0xffa5abed),
+                          Color(0xffe0e2ff),
+                        ],
                       ),
-                      backgroundColor: Colors.blue,
                     ),
-                    child: const Text(
-                      "Done",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    child: ElevatedButton(
+                      onPressed: () => createOrEditTask(editTask: true),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      child: const Text(
+                        "Done",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ),
                 ),

@@ -19,41 +19,57 @@ class AboutPageTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: Color(0xff1E201E),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xff191f22),
+            Color(0xff131618),
+            Color(0xff0d0c0b),
+            Color(0xff060505),
+            Color(0xff000000),
+          ],
         ),
-        minimumSize: Size(buttonWidth, 50),
       ),
-      onPressed: () async {
-        Uri githubUrl = navigateToUrl;
-        await launchUrl(
-          githubUrl,
-          mode: launchMode,
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // CircleAvatar(
-          //   backgroundImage: AssetImage(leadingImagePath),
-          //   backgroundColor: Colors.white,
-          //   radius: 15,
-          // ),
-          leadingWidget,
-          SizedBox(
-            width: 5,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
           ),
-          Text(
-            buttonText,
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: "RobotoSlab",
+          minimumSize: Size(buttonWidth, 50),
+        ),
+        onPressed: () async {
+          Uri githubUrl = navigateToUrl;
+          await launchUrl(
+            githubUrl,
+            mode: launchMode,
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // CircleAvatar(
+            //   backgroundImage: AssetImage(leadingImagePath),
+            //   backgroundColor: Colors.white,
+            //   radius: 15,
+            // ),
+            leadingWidget,
+            SizedBox(
+              width: 5,
             ),
-          ),
-        ],
+            Text(
+              buttonText,
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: "RobotoSlab",
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

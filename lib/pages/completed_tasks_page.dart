@@ -6,7 +6,6 @@ import 'package:simple_todo_app/hive_database/completed_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/pages/no_tasks_screen.dart';
 
-
 /// Implements the page for displaying all the tasks that have `already been completed by the user`.
 class CompletedTasksPage extends StatefulWidget {
   const CompletedTasksPage({super.key});
@@ -30,7 +29,12 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
                 firstRun = false;
               }
               return NoTasksScreen(
-                buttonColor: Colors.cyan,
+                gradientBegin: Alignment.topLeft,
+                gradientEnd: Alignment.bottomRight,
+                gradientColors: [
+                  Color(0xff5803dc),
+                  Color(0xffe41eff),
+                ],
                 buttonText: "Complete a task now",
                 onButtonTap: () =>
                     Provider.of<NavigationProvider>(context, listen: false)
