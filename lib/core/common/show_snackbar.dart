@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// SnackBar displayed to notify the user that the action has been performed successfully.
 void showSnackBar(
   BuildContext context,
   String message,

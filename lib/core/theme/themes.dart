@@ -3,6 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
 
 class CustomThemes {
+  /// Implements `custom themes for specific components of the application`.
+  ///
+  /// The themes change as per the main theme of the application, that is, DarkMode or LightMode.
+  CustomThemes();
+  
   ThemeData _getCurrentTheme(BuildContext context) {
     return Provider.of<ThemeProvider>(context).getCurrentTheme;
   }
@@ -15,6 +20,7 @@ class CustomThemes {
     }
   }
 
+  /// Sets `custom theme for every AppBar` implemented in the application.
   AppBarTheme getCustomAppBarTheme(BuildContext context) {
     final _currentTheme = _getCurrentTheme(context);
 
@@ -31,6 +37,7 @@ class CustomThemes {
     );
   }
 
+  /// Sets `custom theme for every ListTile widget` implemented throughout the application.
   ListTileThemeData getCustomListTileTheme(BuildContext context) {
     final ThemeData _currentTheme = _getCurrentTheme(context);
 
@@ -55,6 +62,9 @@ class CustomThemes {
     );
   }
 
+  /// `Custom theme for texts` in the application.
+  ///
+  /// Implemented for some specific texts of the application.
   TextTheme getCustomTextTheme(BuildContext context) {
     ThemeData _currentTheme = _getCurrentTheme(context);
 
@@ -69,6 +79,7 @@ class CustomThemes {
     );
   }
 
+  /// `Custom themes for the Dialogs` displayed throughout the application.
   DialogTheme getCustomDialogTheme(BuildContext context) {
     ThemeData _currentTheme = _getCurrentTheme(context);
 
@@ -88,6 +99,7 @@ class CustomThemes {
     );
   }
 
+  /// `Custom TextField theme` implemented on every TextField of the application.
   InputDecorationTheme getTextFormFieldTheme(BuildContext context) {
     final _currentTheme = _getCurrentTheme(context);
 

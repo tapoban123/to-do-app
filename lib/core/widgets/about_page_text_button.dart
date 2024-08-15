@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// This button is implemented in the [AboutPage], under the "Contact the Developer" section.
 class AboutPageTextButton extends StatelessWidget {
   final Widget leadingWidget;
   final String buttonText;
@@ -52,11 +54,6 @@ class AboutPageTextButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // CircleAvatar(
-            //   backgroundImage: AssetImage(leadingImagePath),
-            //   backgroundColor: Colors.white,
-            //   radius: 15,
-            // ),
             leadingWidget,
             SizedBox(
               width: 5,

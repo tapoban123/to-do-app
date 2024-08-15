@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_dialog.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
+import 'package:simple_todo_app/pages/home_page.dart';
 
+/// AppBar implemented in the [HomePage].
 class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
   HomePageAppbar({super.key}) : preferredSize = Size.fromHeight(kToolbarHeight);
 
@@ -16,21 +18,9 @@ class HomePageAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text(
         "PENDING TASKS",
-        // style: TextStyle(
-        //   fontFamily: "OpenSans",
-        //   letterSpacing: 3,
-        //   color: Colors.white,
-        //   fontWeight: FontWeight.w900,
-        // ),
       ),
       centerTitle: true,
       actions: [
-        // TextButton(
-        //   onPressed: () {
-        //     showSnackBar(context, "Task Created", Colors.purple[300]!);
-        //   },
-        //   child: Icon(Icons.notifications),
-        // ),
         TextButton(
           onPressed: () {
             int pendingTasksLength =

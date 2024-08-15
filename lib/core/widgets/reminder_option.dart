@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:simple_todo_app/pages/create_task_page.dart';
 
+/// Implemented on the [CreateTaskPage]. 
+/// 
+/// Used for selecting the Date and Time to schedule notifications. 
 class ReminderOption extends StatelessWidget {
   final String tileLabel;
   final VoidCallback onTap;

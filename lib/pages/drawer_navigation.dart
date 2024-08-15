@@ -12,11 +12,10 @@ import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/home_page.dart';
 import 'package:simple_todo_app/pages/settings_page.dart';
 
-
-/// This is the `navigationHandler page`.
-/// 
-/// It `returns the appropriate page` when the user navigates through the Drawer widgets.
 class DrawerNavigation extends StatefulWidget {
+  /// This is the `NavigationHandler page`.
+  ///
+  /// It `returns the appropriate page` when the user navigates through the Drawer widgets.
   DrawerNavigation({super.key});
 
   @override

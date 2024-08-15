@@ -5,6 +5,9 @@ import 'package:simple_todo_app/core/local_notifications/local_notifications_ser
 import 'package:simple_todo_app/core/model/task_model.dart';
 
 class PendingTasksDbServices with ChangeNotifier {
+  /// Implements Database `CRUD operations for PendingTasks`.
+  PendingTasksDbServices();
+
   late Box box;
   final List<TaskModel> _allTasks = []; // List to store tasks for display
   final List<Map<String, dynamic>> _hiveTasks =

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simple_todo_app/pages/about_page.dart';
 
+/// AppBar implemented in the [AboutPage].
 class AboutPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   AboutPageAppbar({super.key})
       : preferredSize = Size.fromHeight(kToolbarHeight);

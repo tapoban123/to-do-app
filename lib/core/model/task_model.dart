@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+/// Model which is followed to store every task in database.
 class TaskModel {
   final int taskId;
   final String taskTitle;

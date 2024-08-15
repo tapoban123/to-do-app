@@ -9,6 +9,7 @@ class ThemeProvider extends ChangeNotifier {
   String _lightModeText = "Switch to light mode";
   String _darkModeText = "Switch to dark mode";
 
+  /// Provider to `set app-wide theme of the application`: LightMode or DarkMode.
   ThemeProvider({
     required bool isDark,
   }) {
@@ -28,7 +29,9 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  void changeTheme({required bool toDarkTheme}) {
+  void changeTheme({
+    required bool toDarkTheme,
+  }) {
     if (toDarkTheme) {
       _currentTheme = ThemeData.dark();
       _themeText = _lightModeText;

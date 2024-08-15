@@ -14,17 +14,17 @@ import 'package:simple_todo_app/core/widgets/reminder_option.dart';
 import 'package:simple_todo_app/core/widgets/scheduled_task_icon.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 
-/// This page is returned when the user wants to `create or edit a task`.
-/// For editing purpose a boolean condition is checked.
-///
-/// IF condition is true: TaskEdit widgets are returned
-///
-/// ELSE: CreateTask widgets are returned
 class CreateTaskPage extends StatefulWidget {
   final TaskModel? oldTask;
   final bool editSpecificTask;
   final int? taskIndex;
 
+  /// This page is returned when the user wants to `create or edit a task`.
+  /// For editing purpose a boolean condition is checked.
+  ///
+  /// IF condition is true: TaskEdit widgets are returned
+  ///
+  /// ELSE: CreateTask widgets are returned
   const CreateTaskPage({
     super.key,
     this.oldTask,

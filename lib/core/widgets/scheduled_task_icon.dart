@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+/// Icon that has been used to mark a task as a ScheduledTask.
 class ScheduledTaskIcon extends StatelessWidget {
   const ScheduledTaskIcon({super.key});
 

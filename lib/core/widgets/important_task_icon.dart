@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Icon implemented as the leadingIcon to mark a task as IMPORTANT.
 class ImportantTaskIcon extends StatelessWidget {
   const ImportantTaskIcon({super.key});
 

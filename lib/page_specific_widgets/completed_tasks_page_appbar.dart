@@ -5,7 +5,9 @@ import 'package:simple_todo_app/core/common/show_dialog.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
 import 'package:simple_todo_app/core/common/show_snackbar.dart';
 import 'package:simple_todo_app/hive_database/completed_tasks_db_services.dart';
+import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 
+/// AppBar implemented on the [CompletedTasksPage].
 class CompletedTasksPageAppbar extends StatelessWidget
     implements PreferredSizeWidget {
   CompletedTasksPageAppbar({super.key})

@@ -5,9 +5,9 @@ import 'package:simple_todo_app/core/theme/theme_provider.dart';
 import 'package:simple_todo_app/core/widgets/about_page_text_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// This page `displays a brief description` of the application along with
-/// an introduction of it's developer and the developer's contact info
 class AboutPage extends StatefulWidget {
+  /// This page `displays a brief description` of the application along with
+  /// an introduction of it's developer and the developer's contact info.
   const AboutPage({super.key});
 
   @override

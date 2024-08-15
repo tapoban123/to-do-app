@@ -4,6 +4,7 @@ import 'package:simple_todo_app/core/navigation_service/navigation_service.dart'
 import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 
+/// The main Drawer of the application, which allows the navigation between the pages.
 class HomePageDrawer extends StatefulWidget {
   const HomePageDrawer({
     super.key,

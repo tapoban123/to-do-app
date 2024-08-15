@@ -6,10 +6,12 @@ import 'package:simple_todo_app/pages/drawer_navigation.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+/// Contains each and every `functionality required to implement LocalNotifications`.
 class LocalNotificationsService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  /// Initialise LocalNotifications plugin.
   Future<void> initialiseLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("pending_task_icon_white");
@@ -24,6 +26,7 @@ class LocalNotificationsService {
     tz.initializeTimeZones();
   }
 
+  /// Navigates to an app page when notification is clicked.
   void _onDidReceiveNotificationResponse(
     NotificationResponse notificationResponse,
   ) async {
@@ -37,6 +40,7 @@ class LocalNotificationsService {
     );
   }
 
+  /// Implements all the necessary details of a specific notification.
   AndroidNotificationDetails _getAndroidNotificationDetails() {
     return AndroidNotificationDetails(
       'channel_id',
@@ -58,7 +62,7 @@ class LocalNotificationsService {
     );
   }
 
-  /// Show instant notifications on Android
+  /// Show `instant notifications` on Android.
   void showInstantNotificationAndroid(String title, String value) async {
     AndroidNotificationDetails androidNotificationDetails =
         _getAndroidNotificationDetails();
@@ -76,7 +80,7 @@ class LocalNotificationsService {
     );
   }
 
-  /// Show scheduled notifications on Android
+  /// Show `scheduled notifications` on Android.
   Future<void> showScheduledNotification({
     required int notificationID,
     required String title,
@@ -110,6 +114,8 @@ class LocalNotificationsService {
     }
   }
 
+  /// `Cancels all notifications that are active`, meaning the notifications 
+  /// which have already been displayed but has not been cancelled yet.
   void cancelActiveNotifications() async {
     final activeNotifications =
         await flutterLocalNotificationsPlugin.getActiveNotifications();
@@ -121,10 +127,12 @@ class LocalNotificationsService {
     }
   }
 
+  /// Cancels a specific notification by it's ID.
   void cancelSpecificNotification(int notificationID) async {
     await flutterLocalNotificationsPlugin.cancel(notificationID);
   }
 
+  /// Cancels all scheduled notifications.
   void cancelAllNotification() async {
     await flutterLocalNotificationsPlugin.cancelAll();
   }
