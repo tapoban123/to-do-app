@@ -4,7 +4,7 @@ import 'package:simple_todo_app/pages/create_task_page.dart';
 import 'package:simple_todo_app/pages/home_page.dart';
 
 /// [FloatingActionButton] implemented on the [HomePage].
-/// 
+///
 /// Used to create new tasks.
 class HomePageFloatingActionButton extends StatelessWidget {
   const HomePageFloatingActionButton({super.key});

@@ -7,7 +7,7 @@ class CustomThemes {
   ///
   /// The themes change as per the main theme of the application, that is, DarkMode or LightMode.
   CustomThemes();
-  
+
   ThemeData _getCurrentTheme(BuildContext context) {
     return Provider.of<ThemeProvider>(context).getCurrentTheme;
   }

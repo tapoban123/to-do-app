@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// Implements a NavigatorKey. 
-/// 
+/// Implements a NavigatorKey.
+///
 /// Utilised in places where navigation was necessary without a BuildContext.
 class NavigationService {
   static final GlobalKey<NavigatorState> navigatorKey =

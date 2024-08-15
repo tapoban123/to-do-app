@@ -114,7 +114,7 @@ class LocalNotificationsService {
     }
   }
 
-  /// `Cancels all notifications that are active`, meaning the notifications 
+  /// `Cancels all notifications that are active`, meaning the notifications
   /// which have already been displayed but has not been cancelled yet.
   void cancelActiveNotifications() async {
     final activeNotifications =

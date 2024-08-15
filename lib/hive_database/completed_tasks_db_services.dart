@@ -3,11 +3,10 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:simple_todo_app/core/constants.dart';
 import 'package:simple_todo_app/core/model/task_model.dart';
 
-
 class CompletedTasksDbServices extends ChangeNotifier {
   /// Implements Database `CRUD operations for CompletedTasks`.
   CompletedTasksDbServices();
-  
+
   late Box box;
 
   List<TaskModel> _allTasks = [];

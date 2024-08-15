@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Dialog displayed when any confirmation is needed from the user
-/// 
+///
 /// For example, when the user deletes a task.
 void showConfirmationDialog({
   required BuildContext context,

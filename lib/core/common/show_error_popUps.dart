@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-/// A Dialog  that is displayed whenever any unexpected input is given by the user, 
-/// 
+/// A Dialog  that is displayed whenever any unexpected input is given by the user,
+///
 /// or some error occurs.
 void showErrorDialog(
   BuildContext context, {

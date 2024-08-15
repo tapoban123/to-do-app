@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_todo_app/pages/create_task_page.dart';
 
 /// This TextField is implemented in [CreateTaskPage].
-/// 
+///
 /// `TaskTitle` and `TaskDescription` have been implemented using this TextField.
 class CreateTaskTextfield extends StatefulWidget {
   final TextEditingController textController;
