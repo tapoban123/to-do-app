@@ -118,7 +118,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               CreateTaskTextfield(
                 textController: newTaskDescriptionController,
                 hintText: "Task description...",
-                textInputAction: TextInputAction.done,
+                textInputAction: TextInputAction.newline,
                 maxLines: 5,
               ),
               if (widget.editSpecificTask)

@@ -12,7 +12,7 @@ import 'package:simple_todo_app/pages/create_task_page.dart';
 import 'package:simple_todo_app/pages/no_tasks_screen.dart';
 
 /// The [HomePage] displays all the tasks are `yet to be completed by the user`.
-/// 
+///
 /// This page can also be called `PendingTasksPage`.
 class HomePage extends StatefulWidget {
   final ScrollController scrollDirection;
@@ -54,9 +54,9 @@ class _HomePageState extends State<HomePage> {
               gradientBegin: Alignment.centerLeft,
               gradientEnd: Alignment.centerRight,
               gradientColors: [
-                  Color(0xfffe8500),
-                  Color(0xfffeae00),
-                  Color(0xfffdcf19),
+                Color(0xfffe8500),
+                Color(0xfffeae00),
+                Color(0xfffdcf19),
               ],
               buttonText: "Create a task now",
               onButtonTap: () {
@@ -110,7 +110,10 @@ class _HomePageState extends State<HomePage> {
                           eachTask.taskTitle,
                           style: TextStyle(
                             fontSize: 16,
+                            wordSpacing: 2,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
@@ -121,6 +124,7 @@ class _HomePageState extends State<HomePage> {
                             : Text(
                                 eachTask.taskDescription,
                                 overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                               ),
                         onTap: () {
                           Navigator.of(context).push(
