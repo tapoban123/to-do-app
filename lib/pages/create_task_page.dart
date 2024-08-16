@@ -54,6 +54,16 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   TimeOfDay remindMeTime = TimeOfDay.now();
 
   @override
+  void initState() {
+    Provider.of<ScheduleDateTimeProvider>(
+      context,
+      listen: false,
+    ).resetDateTime();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.editSpecificTask && firstRun) {
       final prevTask = widget.oldTask!;
@@ -364,9 +374,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
               1;
       try {
         if (remindMe && (editTask == false)) {
-          print("entered");
-
-          print(currentTaskId);
           await LocalNotificationsService().showScheduledNotification(
             notificationID: currentTaskId,
             title: "You have one pending task",
@@ -397,8 +404,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           );
 
           if (remindMe == false) {
-            print("Cancelled edited task");
-            print(widget.oldTask!.taskId);
             LocalNotificationsService()
                 .cancelSpecificNotification(widget.oldTask!.taskId);
           } else {

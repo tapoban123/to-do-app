@@ -22,4 +22,10 @@ class ScheduleDateTimeProvider extends ChangeNotifier {
     _currentTime = DateFormat.jm().format(newTime);
     notifyListeners();
   }
+
+  void resetDateTime() {
+    _currentDate =
+        DateFormat("dd/MM/yyyy").format(DateTime.now()).replaceAll("/", "-");
+    _currentTime = DateFormat.jm().format(DateTime.now());
+  }
 }
