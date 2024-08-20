@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/common/show_error_popUps.dart';
 import 'package:simple_todo_app/core/common/show_snackbar.dart';
@@ -217,11 +218,7 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
                 titleText: "Remind me",
                 leadingIcon: ScheduledTaskIcon(),
                 isChecked: remindMe,
-                onChanged: (val) {
-                  setState(() {
-                    remindMe = !remindMe;
-                  });
-                },
+                onChanged: (val) => remindMeButtonOnTap(),
               ),
               const SizedBox(
                 height: 25,
@@ -297,6 +294,53 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         ),
       ),
     );
+  }
+
+  void remindMeButtonOnTap() async {
+    final status = await Permission.notification.status;
+
+    print(status);
+
+    if (status.isPermanentlyDenied) {
+      showErrorDialog(
+        context,
+        icon: Icons.notifications_off_rounded,
+        titleText: "Notifications are turned off",
+        contentText:
+            "You need to allow the application to display notifications in order to schedule tasks.",
+        actionButtonText: "Open App settings",
+        onTap: () async {
+          await openAppSettings();
+          Navigator.of(context).pop();
+        },
+      );
+
+      print("Permanently Denied callback");
+    } else if (status.isDenied) {
+      Permission.notification.request().then(
+        (value) {
+          if (value.isDenied || value.isPermanentlyDenied) {
+            showErrorDialog(
+              context,
+              icon: Icons.notifications_off_rounded,
+              titleText: "Notifications are turned off",
+              contentText:
+                  "You need to allow the application to display notifications in order to schedule tasks.",
+              actionButtonText: "Open App settings",
+              onTap: () async {
+                await openAppSettings();
+                Navigator.of(context).pop();
+              },
+            );
+          }
+        },
+      );
+    } else if (status.isGranted) {
+      print("Granted callback");
+      setState(() {
+        remindMe = !remindMe;
+      });
+    }
   }
 
   void pickDate() {
