@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:simple_todo_app/core/navigation_service/navigation_service.dart';
 import 'package:simple_todo_app/pages/drawer_navigation.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -89,9 +88,9 @@ class LocalNotificationsService {
   }) async {
     int notificationId = notificationID;
 
-    final timeZone = await FlutterTimezone.getLocalTimezone();
-    final timeZoneName = await tz.getLocation(timeZone);
-    final scheduledDate = tz.TZDateTime.from(scheduledDateTime, timeZoneName);
+    // final timeZone = await FlutterTimezone.getLocalTimezone();
+    // final timeZoneName = await tz.getLocation(timeZone);
+    final scheduledDate = await tz.TZDateTime.from(scheduledDateTime, tz.local);
     try {
       await flutterLocalNotificationsPlugin
           .zonedSchedule(

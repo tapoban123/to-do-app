@@ -111,6 +111,29 @@ class _AboutPageState extends State<AboutPage> {
                             "With timely notifications, you'll never miss an important task, helping you stay organized and boost your productivity effortlessly. ",
                         style: TextStyle(color: paragraphFontColor),
                       ),
+                      TextSpan(
+                        text: "\n\nInitial Release: August, 2024\n",
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .color!
+                              .withOpacity(0.25),
+                          fontWeight: FontWeight.w600,
+                          height: 1.2,
+                          letterSpacing: 1.4,
+                          fontSize: 12.5,
+                          // wordSpacing: 3,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: "Version: 1.0.1 (BETA)",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -118,7 +141,7 @@ class _AboutPageState extends State<AboutPage> {
             },
           ),
           SizedBox(
-            height: 50,
+            height: 30,
           ),
           Container(
             width: double.infinity,

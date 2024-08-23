@@ -315,7 +315,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
         },
       );
 
-      print("Permanently Denied callback");
     } else if (status.isDenied) {
       Permission.notification.request().then(
         (value) {
