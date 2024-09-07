@@ -15,7 +15,6 @@ import 'package:simple_todo_app/hive_database/shared_preferences_local_storage.d
 import 'package:simple_todo_app/pages/about_page.dart';
 import 'package:simple_todo_app/pages/completed_tasks_page.dart';
 import 'package:simple_todo_app/pages/create_task_page.dart';
-import 'package:simple_todo_app/pages/drawer_navigation.dart';
 import 'package:simple_todo_app/pages/settings_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 

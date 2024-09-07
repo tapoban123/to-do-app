@@ -314,7 +314,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
           Navigator.of(context).pop();
         },
       );
-
     } else if (status.isDenied) {
       Permission.notification.request().then(
         (value) {
