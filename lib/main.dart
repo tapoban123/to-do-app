@@ -8,6 +8,7 @@ import 'package:simple_todo_app/core/providers/navigation_provider.dart';
 import 'package:simple_todo_app/core/providers/schedule_date_time_provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
 import 'package:simple_todo_app/core/theme/themes.dart';
+import 'package:simple_todo_app/core/utils/splash_screen.dart';
 import 'package:simple_todo_app/hive_database/completed_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/pending_tasks_db_services.dart';
 import 'package:simple_todo_app/hive_database/shared_preferences_local_storage.dart';
@@ -74,6 +75,7 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
       ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) => MaterialApp(
+          title: "QuickList",
           navigatorKey: NavigationService.navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: themeProvider.getCurrentTheme.copyWith(
@@ -85,7 +87,7 @@ class _SimpleTodoAppState extends State<SimpleTodoApp> {
           ),
           initialRoute: "/",
           routes: {
-            "/": (context) => DrawerNavigation(),
+            "/": (context) => SplashScreen(),
             "/createTasksPage": (context) => CreateTaskPage(),
             "/completedTasksPage": (context) => CompletedTasksPage(),
             "/aboutPage": (context) => AboutPage(),

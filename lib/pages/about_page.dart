@@ -112,7 +112,7 @@ class _AboutPageState extends State<AboutPage> {
                         style: TextStyle(color: paragraphFontColor),
                       ),
                       TextSpan(
-                        text: "\n\nInitial Release: August, 2024\n",
+                        text: "\n\nInitial Release: September, 2024\n",
                         style: TextStyle(
                           color: Theme.of(context)
                               .textTheme
