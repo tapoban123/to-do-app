@@ -127,7 +127,7 @@ class _AboutPageState extends State<AboutPage> {
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text: "Version: 1.0.1 (BETA)",
+                            text: "Version: 1.0.0",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                             ),
