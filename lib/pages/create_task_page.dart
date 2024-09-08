@@ -299,8 +299,6 @@ class _CreateTaskPageState extends State<CreateTaskPage> {
   void remindMeButtonOnTap() async {
     final status = await Permission.notification.status;
 
-    print(status);
-
     if (status.isPermanentlyDenied) {
       showErrorDialog(
         context,

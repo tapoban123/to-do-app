@@ -29,6 +29,7 @@ void main() async {
       }
     },
   );
+
   tz.initializeTimeZones();
   await LocalNotificationsService().initialiseLocalNotifications();
   final _isDark = await SharedPreferencesLocalStorage().getCurrentTheme();
