@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_todo_app/core/theme/theme_provider.dart';
 
@@ -27,6 +28,12 @@ class CustomThemes {
     Color fontColor = _setThemeSpecificFontColor(_currentTheme);
 
     return AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        systemNavigationBarColor: _currentTheme.scaffoldBackgroundColor,
+        systemNavigationBarIconBrightness: _currentTheme == ThemeData.dark()
+            ? Brightness.light
+            : Brightness.dark,
+      ),
       titleTextStyle: TextStyle(
         fontFamily: "OpenSans",
         fontWeight: FontWeight.w900,
